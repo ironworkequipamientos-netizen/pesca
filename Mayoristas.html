@@ -185,12 +185,26 @@ document.addEventListener('click',function(e){var b=e.target.closest('.qb');if(!
 document.addEventListener('input',function(e){if(e.target.closest('.prod')||fields.indexOf(e.target.id)>-1){e.target.value=e.target.closest('.prod')?e.target.value.replace(/[^0-9]/g,''):e.target.value;upd()}});
 $('copy').addEventListener('click',function(){var t=check();if(!t)return;var ok=copy(t.s);upd();
  $('msg').innerHTML=ok?'Pedido <b>copiado</b>. Pegalo en nuestro chat de WhatsApp.':'No pude copiarlo solo: seleccioná el resumen de arriba y copialo.'});
-$('send').addEventListener('click',function(){var t=check();if(!t)return;countOrder();
+$('send').addEventListener('click',function(){var t=check();if(!t)return;countOrder(t.total);
  if(WA_NUM){window.open('https://wa.me/'+WA_NUM+'?text='+encodeURIComponent(t.s),'_blank','noopener');$('msg').innerHTML='Se abrió WhatsApp con tu pedido listo para <b>enviar</b>.';return}
  var ok=copy(t.s);upd();window.open(WA_LINK,'_blank','noopener');
  $('msg').innerHTML=ok?'Copiamos tu pedido. En WhatsApp <b>pegalo en el chat</b> y envialo.':'Se abrió WhatsApp. Copiá el resumen de arriba y pegalo en el chat.'});
 var nc=false;try{nc=localStorage.getItem('iw_nc')==='1'}catch(e){}
-function countOrder(){if(nc)return;try{fetch('/api/contador',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({t:'pedido'}),keepalive:true})}catch(e){}}
+/* ---- Registro de visitas y pasos del pedido ---- */
+function today(){return new Date(Date.now()-3*3600e3).toISOString().slice(0,10)}
+var st={d:'',f:{}};try{st=JSON.parse(localStorage.getItem('iw_stm')||'{}')}catch(e){}
+if(!st||st.d!==today())st={d:today(),f:{}};
+var qq=[],tm=null;
+function flush(){if(!qq.length)return;var b=JSON.stringify({e:qq.splice(0,30)});
+ try{if(navigator.sendBeacon){navigator.sendBeacon('/api/contador',new Blob([b],{type:'application/json'}))}
+ else{fetch('/api/contador',{method:'POST',headers:{'Content-Type':'application/json'},body:b,keepalive:true})}}catch(e){}}
+function ev(n,v,once){if(nc)return;if(once){if(st.f[n])return;st.f[n]=1;try{localStorage.setItem('iw_stm',JSON.stringify(st))}catch(e){}}
+ qq.push(v?{n:n,v:v}:{n:n});clearTimeout(tm);tm=setTimeout(flush,1500)}
+function countOrder(units){ev('m_pedido');ev('m_unidades',units||1);flush()}
+ev('m_visita',0,true);
+document.addEventListener('input',function(e){var t=e.target;if(t.closest&&t.closest('.prod')){if(parseInt(t.value,10)>0)ev('m_producto',0,true)}else if(t.id==='nom'||t.id==='neg'){if(t.value.trim())ev('m_datos',0,true)}});
+document.addEventListener('click',function(e){var b=e.target.closest('.qb');if(b&&b.dataset.d==='+')ev('m_producto',0,true)});
+document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')flush()});
 /* Contador real: se muestra solo cuando supera este mínimo */
 try{fetch('/api/contador').then(function(r){return r.json()}).then(function(d){if(d&&d.ok&&d.pedidos>=5){$('nO').textContent=d.pedidos.toLocaleString('es-AR');$('liveO').hidden=false}}).catch(function(){})}catch(e){}
 load();upd();

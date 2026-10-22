@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Panel | Ironwork Equipamientos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--o:#ff6a00;--bg:#070707;--card:#141414;--line:#2a2a2a;--mu:#b0b0b0;--ok:#2fd27a;--bad:#ff5a5a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:#fff;font-family:Poppins,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.5}
+.w{max-width:1100px;margin:0 auto;padding:0 18px}
+a{color:inherit}
+h1,h2,h3{margin:0;text-transform:uppercase;font-weight:800;letter-spacing:-.01em;line-height:1.1}
+h2{font-size:1.25rem;margin-bottom:6px}
+h2 b{color:var(--o)}
+.sub{color:var(--mu);font-size:.85rem;margin:0 0 18px}
+header{border-bottom:3px solid var(--o);background:radial-gradient(600px 200px at 90% 0,rgba(255,106,0,.18),transparent 70%),#050505}
+.top{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;padding:18px 0}
+.logo{font-weight:800;font-size:1.5rem;letter-spacing:-.03em;line-height:1}
+.logo small{display:block;font-size:.45rem;letter-spacing:.5em;color:var(--mu);font-weight:500;margin-top:3px}
+.logo span{color:var(--o);font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;margin-left:10px;font-weight:700}
+.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.tab,.out{border:2px solid var(--line);background:#000;color:#fff;border-radius:999px;padding:8px 16px;font:600 .8rem Poppins,sans-serif;cursor:pointer}
+.tab.on{border-color:var(--o);background:var(--o);color:#000}
+.tab:hover,.out:hover{border-color:var(--o)}
+.out{color:var(--mu)}
+section{padding:34px 0 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:26px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px}
+.kpi .l{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mu);font-weight:600}
+.kpi .n{font-size:1.9rem;font-weight:800;line-height:1.2;margin-top:4px}
+.kpi .d{font-size:.78rem;font-weight:600}
+.up{color:var(--ok)}.dn{color:var(--bad)}.eq{color:var(--mu)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+table{width:100%;border-collapse:collapse;font-size:.85rem}
+th{text-align:left;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mu);font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line)}
+td{padding:9px 8px;border-bottom:1px solid #1d1d1d;vertical-align:middle}
+td.r,th.r{text-align:right}
+.bar{height:8px;border-radius:99px;background:#222;overflow:hidden;min-width:60px}
+.bar i{display:block;height:100%;background:var(--o);border-radius:99px}
+.scroll{overflow-x:auto}
+.rank{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#222;font-weight:700;font-size:.78rem}
+.top3 .rank{background:var(--o);color:#000}
+.step{display:grid;grid-template-columns:200px 1fr 120px;gap:12px;align-items:center;padding:7px 0;border-bottom:1px solid #1d1d1d;font-size:.85rem}
+.step .bar{height:14px}
+.step .v{text-align:right;font-weight:700}
+.step .v small{display:block;font-weight:500;color:var(--mu);font-size:.72rem}
+.step.fin .bar i{background:var(--ok)}
+.drop{color:var(--bad);font-weight:700}
+.tip{border-left:4px solid var(--line);padding:12px 16px;background:#101010;border-radius:0 14px 14px 0;margin-bottom:10px}
+.tip.alta{border-left-color:var(--bad)}.tip.media{border-left-color:var(--o)}.tip.info{border-left-color:var(--ok)}
+.tip b{display:block;font-size:.95rem}
+.tip span{color:var(--mu);font-size:.85rem}
+.tag{display:inline-block;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;padding:2px 8px;border-radius:99px;margin-right:8px;vertical-align:middle;background:#222}
+.alta .tag{background:var(--bad);color:#000}.media .tag{background:var(--o);color:#000}.info .tag{background:var(--ok);color:#000}
+svg text{fill:#b0b0b0;font:11px Poppins,sans-serif}
+.empty{color:var(--mu);font-size:.9rem;padding:14px 0}
+.login{max-width:380px;margin:70px auto;text-align:center}
+.login input{width:100%;margin:16px 0 10px;background:#000;border:2px solid var(--line);border-radius:14px;color:#fff;padding:14px;font:500 1rem Poppins,sans-serif;text-align:center}
+.login input:focus{outline:none;border-color:var(--o)}
+.btn{background:var(--o);color:#000;border:0;border-radius:999px;padding:13px 26px;font:700 .9rem Poppins,sans-serif;text-transform:uppercase;cursor:pointer;width:100%}
+.err{color:var(--bad);font-size:.85rem;min-height:1.3em;margin-top:10px}
+.how{color:var(--mu);font-size:.82rem}
+.how li{margin-bottom:6px}
+footer{padding:40px 0 60px;color:#666;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;text-align:center}
+[hidden]{display:none!important}
+@media(max-width:860px){.kpis{grid-template-columns:repeat(2,1fr)}.g2{grid-template-columns:1fr}.step{grid-template-columns:1fr 90px}.step .bar{grid-column:1/-1;order:3}}
+</style></head>
+<body>
+<header><div class="w top">
+ <div class="logo">ironwork<span>Panel</span><small>EQUIPAMIENTOS</small></div>
+ <div class="tools" id="tools" hidden>
+  <button class="tab" data-d="7">7 días</button><button class="tab on" data-d="30">30 días</button><button class="tab" data-d="90">90 días</button>
+  <button class="out" id="out">Salir</button>
+ </div>
+</div></header>
+
+<div class="w">
+ <div class="login card" id="login">
+  <h2>Panel <b>privado</b></h2>
+  <p class="sub">Ingresá tu clave para ver las estadísticas.</p>
+  <input id="key" type="password" placeholder="Clave" autocomplete="current-password">
+  <button class="btn" id="go">Entrar</button>
+  <div class="err" id="err"></div>
+ </div>
+
+ <main id="main" hidden>
+  <div class="kpis" id="kpis"></div>
+
+  <section><h2>Qué conviene <b>optimizar</b></h2><p class="sub">Sugerencias automáticas según tus números. Son orientativas: sirven para decidir qué probar primero.</p><div id="tips"></div></section>
+
+  <section><h2>Visitas y clics <b>por día</b></h2><p class="sub">Barras: visitas. Línea naranja: visitas que hicieron clic hacia Mercado Libre.</p><div class="card"><div id="chart"></div></div></section>
+
+  <section><h2>Dónde se <b>va la gente</b></h2><p class="sub">Qué porcentaje de las visitas llegó a cada parte de la página. Los saltos grandes entre un paso y otro muestran dónde se pierde el interés.</p><div class="card" id="funnel"></div></section>
+
+  <section><h2>Productos con <b>más clics</b></h2><p class="sub">Clics en el botón Comprar de cada tarjeta, comparados con el período anterior.</p><div class="card scroll" id="prods"></div></section>
+
+  <section><div class="g2">
+   <div><h2>De dónde <b>llegan</b></h2><p class="sub">Canales y tasa de clic de cada uno.</p><div class="card scroll" id="chan"></div></div>
+   <div><h2>Celular o <b>compu</b></h2><p class="sub">Dispositivo desde el que entran.</p><div class="card scroll" id="dev"></div></div>
+  </div></section>
+
+  <section><div class="g2">
+   <div><h2>Qué <b>botones</b> tocan</h2><p class="sub">Clics cada 100 visitas.</p><div class="card scroll" id="btns"></div></div>
+   <div><h2>Puntos de <b>venta</b></h2><p class="sub">Clics en “Cómo llegar”.</p><div class="card scroll" id="stores"></div></div>
+  </div></section>
+
+  <section><h2>Semana <b>a semana</b></h2><p class="sub">Cómo cambian los números de una semana a la otra.</p><div class="card scroll" id="weeks"></div></section>
+
+  <section><h2>Venta <b>mayorista</b></h2><p class="sub">Recorrido de quienes entran a la página de mayoristas.</p><div class="card" id="may"></div></section>
+
+  <section><h2>Cómo leer <b>los datos</b></h2><div class="card"><ul class="how">
+   <li><b>Visita:</b> un navegador que entra a la página, contado una vez por día.</li>
+   <li><b>Clic a la tienda:</b> visita que tocó algún link hacia Mercado Libre (botón Comprar de un producto o botón de la tienda). Se cuenta una vez por visita.</li>
+   <li><b>Tasa de clic:</b> clics a la tienda dividido visitas. No es la tasa de compra: la compra se cierra en Mercado Libre y ahí hay que mirar tus ventas.</li>
+   <li><b>Llegó a una sección:</b> el visitante bajó hasta esa parte de la página.</li>
+   <li>Las visitas que hacés vos con <code>?noconteo=1</code> y los bots conocidos no se cuentan. Los números son aproximados: una persona con dos dispositivos cuenta dos veces.</li>
+  </ul></div></section>
+ </main>
+</div>
+<footer>Ironwork Equipamientos · Panel privado</footer>
+
+<script>
+(function(){
+var PRODUCTS={'haragan-pesca-aluminio-1-20-mts':'Haragán Pesca Aluminio 1,20 mts','haragan-pesca-aluminio-1-50-mts':'Haragán Pesca Aluminio 1,50 mts','haragan-pesca-con-bandeja-chica-1-20-mts':'Haragán Pesca con bandeja chica 1,20 mts','haragan-pesca-con-bandeja-grande-1-20-mts':'Haragán Pesca con bandeja grande 1,20 mts','haragan-pesca-con-bandeja-grande-1-50-mts':'Haragán Pesca con bandeja grande 1,50 mts','haragan-extensible-75-cm-140-cm':'Haragán extensible 75 cm–140 cm','haragan-extensible-con-bandeja-grande-75-cm-140-cm':'Haragán extensible con bandeja grande 75–140 cm','kit-posacana-25-mm':'Kit posacaña 25 mm','kit-posacana-32-mm':'Kit posacaña 32 mm','kit-posacana-automatico-25-mm':'Kit posacaña automático 25 mm','bandeja-organizadora-de-pesca-25-mm':'Bandeja organizadora 25 mm','bandeja-organizadora-de-pesca-32-mm':'Bandeja organizadora 32 mm','bandeja-chica-para-carnada-25-mm':'Bandeja chica para carnada 25 mm','kit-basico-pescador':'Kit básico pescador','soporte-con-linterna-posacana-25-mm':'Soporte con linterna posacaña 25 mm','asistente-pesca-con-bandeja':'Asistente pesca con bandeja'};
+var STORES={'corsario':'Corsario Pesca','shark':'Shark Pesca','pesca-ian':'Pesca Ian','pae-pesca':'Pae Pesca','la-triestina':'Xplora La Triestina','punto-pesca':'Punto Pesca','alma-mia':'Alma Mía','surucho':'Surucho Pesca','carlitos':'Carnadas Carlitos'};
+var SRC={instagram:'Instagram',youtube:'YouTube',google:'Google',facebook:'Facebook',whatsapp:'WhatsApp',qr:'QR de puntos de venta',directo:'Directo / sin dato',otros:'Otros sitios'};
+var FUN=[['v','Entraron a la página'],['sec_promesa','Llegaron a la promesa'],['sec_dolores','Llegaron a los dolores'],['sec_deseos','Llegaron a los deseos'],['sec_linea','Llegaron a los haraganes'],['sec_accesorios','Llegaron a los accesorios'],['sec_pasos','Llegaron a “Así de simple”'],['sec_faq','Llegaron a las preguntas'],['sec_puntos','Llegaron a puntos de venta'],['sec_final','Llegaron al cierre']];
+var FIX={sec_promesa:'Se van antes de la promesa: mejorá el primer pantallazo (titular claro, imagen del producto y un botón principal bien visible) y revisá que cargue rápido en celular.',sec_dolores:'Pocos pasan de la promesa a los dolores: acortá la promesa o sumá una imagen o video corto del producto.',sec_deseos:'Se pierden en la sección de dolores: probá hacerla más corta o más visual.',sec_linea:'Se pierden antes de ver los productos: subí el carrusel más arriba o hacé más visible el botón “Ver productos”.',sec_accesorios:'Pocos bajan hasta los accesorios: sumá un botón o mención a “Accesorios” dentro de la sección de haraganes.',sec_pasos:'Se pierden después de los productos: está bien si ya hicieron clic; si no, reforzá el botón de compra en esa zona.',sec_faq:'Pocos llegan a las preguntas: es normal que no todos bajen; si es una caída grande, acortá lo anterior.',sec_puntos:'Pocos llegan a los puntos de venta: si querés más tráfico a locales, subí esa sección o sumá un botón en el menú.',sec_final:'Pocos llegan al cierre: está bien si ya hicieron clic antes; revisá que haya un botón de compra visible durante toda la página.'};
+var state={days:30,key:''};
+var $=function(i){return document.getElementById(i)};
+var nf=function(n){return Math.round(n).toLocaleString('es-AR')};
+var pc=function(a,b){return b>0?a/b*100:0};
+var p1=function(x){return (Math.round(x*10)/10).toLocaleString('es-AR')+'%'};
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function fd(d){return d.slice(8,10)+'/'+d.slice(5,7)}
+function dlt(c,p,rate){if(rate){var x=c-p;if(Math.abs(x)<0.05)return '<span class="eq">= igual</span>';return '<span class="'+(x>0?'up':'dn')+'">'+(x>0?'▲ ':'▼ ')+Math.abs(Math.round(x*10)/10).toLocaleString('es-AR')+' pp</span>'}
+ if(!p&&!c)return '<span class="eq">–</span>';if(!p)return '<span class="up">nuevo</span>';var x=(c-p)/p*100;if(Math.abs(x)<1)return '<span class="eq">= igual</span>';
+ return '<span class="'+(x>0?'up':'dn')+'">'+(x>0?'▲ ':'▼ ')+Math.abs(Math.round(x)).toLocaleString('es-AR')+'%</span>'}
+function S(arr,f){var t=0;for(var i=0;i<arr.length;i++)t+=(+arr[i].h[f]||0);return t}
+
+function login(){state.key=$('key').value.trim();if(!state.key)return;load()}
+function load(){$('err').textContent='';
+ fetch('/api/panel',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({k:state.key,days:state.days})})
+ .then(function(r){return r.json()}).then(function(d){
+  if(!d.ok){var m={clave:'Clave incorrecta.',sin_clave:'Falta crear la variable PANEL_KEY en Vercel (ver instrucciones).',sin_base:'La base de datos no está conectada.',datos:'No se pudieron leer los datos. Probá de nuevo.'};
+   $('err').textContent=m[d.error]||'No se pudo entrar.';$('login').hidden=false;$('main').hidden=true;$('tools').hidden=true;try{sessionStorage.removeItem('iw_pk')}catch(e){}return}
+  try{sessionStorage.setItem('iw_pk',state.key)}catch(e){}
+  $('login').hidden=true;$('main').hidden=false;$('tools').hidden=false;render(d)})
+ .catch(function(){$('err').textContent='No se pudo conectar. Probá de nuevo.'})}
+
+function render(data){
+ var N=data.n,all=data.days,cur=all.slice(N),prev=all.slice(0,N);
+ var V=S(cur,'v'),Vp=S(prev,'v'),C=S(cur,'conv'),Cp=S(prev,'conv'),R=pc(C,V),Rp=pc(Cp,Vp);
+ var ids=Object.keys(PRODUCTS);
+ var PK=0,PKp=0;ids.forEach(function(i){PK+=S(cur,'p_'+i);PKp+=S(prev,'p_'+i)});
+ var O=S(cur,'m_pedido'),Op=S(prev,'m_pedido');
+ var K=[['Visitas',nf(V),dlt(V,Vp)],['Fueron a la tienda',nf(C),dlt(C,Cp)],['Tasa de clic',p1(R),dlt(R,Rp,1)],['Clics en productos',nf(PK),dlt(PK,PKp)],['Pedidos mayoristas',nf(O),dlt(O,Op)]];
+ $('kpis').innerHTML=K.map(function(k){return '<div class="kpi"><div class="l">'+k[0]+'</div><div class="n">'+k[1]+'</div><div class="d">'+k[2]+' <span class="eq">vs '+N+' días antes</span></div></div>'}).join('');
+
+ // gráfico diario
+ var W=900,H=270,L=42,B=28,T=10,Rr=10,pw=W-L-Rr,ph=H-T-B,mx=Math.max(1,Math.max.apply(null,cur.map(function(x){return Math.max(+x.h.v||0,+x.h.conv||0)}))),bw=pw/cur.length,svg='<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Visitas y clics por día">';
+ for(var g=0;g<=4;g++){var y=T+ph-ph*g/4;svg+='<line x1="'+L+'" x2="'+(W-Rr)+'" y1="'+y+'" y2="'+y+'" stroke="#222"/><text x="'+(L-6)+'" y="'+(y+4)+'" text-anchor="end">'+nf(mx*g/4)+'</text>'}
+ var step=Math.ceil(cur.length/10),pts=[];
+ cur.forEach(function(x,i){var v=+x.h.v||0,c=+x.h.conv||0,bh=ph*v/mx,bx=L+i*bw,cx=bx+bw/2,cy=T+ph-ph*c/mx;
+  svg+='<rect x="'+(bx+bw*0.15)+'" y="'+(T+ph-bh)+'" width="'+(bw*0.7)+'" height="'+bh+'" rx="2" fill="#3a3a3a"><title>'+fd(x.d)+': '+v+' visitas, '+c+' clics a la tienda</title></rect>';
+  pts.push(cx+','+cy);if(i%step===0)svg+='<text x="'+cx+'" y="'+(H-8)+'" text-anchor="middle">'+fd(x.d)+'</text>'});
+ svg+='<polyline fill="none" stroke="#ff6a00" stroke-width="2.5" stroke-linejoin="round" points="'+pts.join(' ')+'"/></svg>';
+ $('chart').innerHTML=V?svg:'<div class="empty">Todavía no hay visitas registradas en este período.</div>';
+
+ // embudo
+ var h='',prevp=null,fx={};
+ FUN.forEach(function(s,i){var n=S(cur,s[0]),p=pc(n,V),drop=prevp===null?0:prevp-p;
+  if(i>0&&drop>=15)fx[s[0]]=drop;
+  h+='<div class="step"><div>'+s[1]+'</div><div class="bar"><i style="width:'+Math.min(100,p)+'%"></i></div><div class="v">'+p1(p)+'<small>'+nf(n)+' visitas'+(i>0&&drop>=15?' · <span class="drop">−'+Math.round(drop)+' pp</span>':'')+'</small></div></div>';prevp=p});
+ h+='<div class="step fin"><div><b>Fueron a la tienda (clic)</b></div><div class="bar"><i style="width:'+Math.min(100,R)+'%"></i></div><div class="v">'+p1(R)+'<small>'+nf(C)+' visitas</small></div></div>';
+ $('funnel').innerHTML=V?h:'<div class="empty">Todavía no hay datos en este período.</div>';
+
+ // productos
+ var rows=ids.map(function(i){return {id:i,c:S(cur,'p_'+i),p:S(prev,'p_'+i)}});
+ var rp=rows.slice().sort(function(a,b){return b.p-a.p}),pos={};rp.forEach(function(r,i){pos[r.id]=r.p>0?i+1:0});
+ rows.sort(function(a,b){return b.c-a.c});var mxp=Math.max(1,rows[0].c);
+ var th='<table><tr><th>#</th><th>Producto</th><th></th><th class="r">Clics</th><th class="r">% del total</th><th class="r">vs antes</th><th class="r">Posición</th></tr>';
+ rows.forEach(function(r,i){var ps='<span class="eq">–</span>';if(r.c>0&&pos[r.id]){var m=pos[r.id]-(i+1);ps=m>0?'<span class="up">▲ '+m+'</span>':m<0?'<span class="dn">▼ '+(-m)+'</span>':'<span class="eq">=</span>'}else if(r.c>0)ps='<span class="up">nuevo</span>';
+  th+='<tr class="'+(i<3&&r.c>0?'top3':'')+'"><td><span class="rank">'+(i+1)+'</span></td><td>'+esc(PRODUCTS[r.id])+'</td><td style="width:22%"><div class="bar"><i style="width:'+pc(r.c,mxp)+'%"></i></div></td><td class="r"><b>'+nf(r.c)+'</b></td><td class="r">'+p1(pc(r.c,PK))+'</td><td class="r">'+dlt(r.c,r.p)+'</td><td class="r">'+ps+'</td></tr>'});
+ $('prods').innerHTML=PK?th+'</table>':'<div class="empty">Todavía no hay clics en productos en este período.</div>';
+
+ // canales y dispositivos
+ function seg(list,lab,vf,cf){var t='<table><tr><th></th><th class="r">Visitas</th><th class="r">% visitas</th><th class="r">Clics tienda</th><th class="r">Tasa</th></tr>';
+  var arr=list.map(function(k){return {k:k,v:S(cur,vf+k),c:S(cur,cf+k)}}).sort(function(a,b){return b.v-a.v});
+  arr.forEach(function(x){if(!x.v&&!x.c)return;t+='<tr><td>'+lab[x.k]+'</td><td class="r">'+nf(x.v)+'</td><td class="r">'+p1(pc(x.v,V))+'</td><td class="r">'+nf(x.c)+'</td><td class="r"><b>'+p1(pc(x.c,x.v))+'</b></td></tr>'});return t+'</table>'}
+ $('chan').innerHTML=V?seg(Object.keys(SRC),SRC,'src_','conv_s_'):'<div class="empty">Sin datos todavía.</div>';
+ $('dev').innerHTML=V?seg(['mobile','desktop'],{mobile:'Celular',desktop:'Compu / tablet'},'dev_','conv_d_'):'<div class="empty">Sin datos todavía.</div>';
+
+ // botones
+ var BT=[['click_producto','Botón Comprar (productos)'],['click_tienda','Botones a la tienda (generales)'],['click_ver_productos','Botón Ver productos'],['click_whatsapp','WhatsApp flotante'],['click_mayorista','Link Venta mayorista'],['click_carrusel','Flechas del carrusel']];
+ var bt='<table><tr><th>Botón</th><th class="r">Clics</th><th class="r">Cada 100 visitas</th><th class="r">vs antes</th></tr>';
+ BT.forEach(function(b){var c=S(cur,b[0]),p=S(prev,b[0]);bt+='<tr><td>'+b[1]+'</td><td class="r"><b>'+nf(c)+'</b></td><td class="r">'+(V?(Math.round(c/V*1000)/10).toLocaleString('es-AR'):'–')+'</td><td class="r">'+dlt(c,p)+'</td></tr>'});
+ $('btns').innerHTML=bt+'</table>';
+ var sr=Object.keys(STORES).map(function(k){return {k:k,c:S(cur,'ll_'+k),p:S(prev,'ll_'+k)}}).sort(function(a,b){return b.c-a.c});
+ var st='<table><tr><th>Punto de venta</th><th class="r">Clics</th><th class="r">vs antes</th></tr>';
+ sr.forEach(function(x){st+='<tr><td>'+STORES[x.k]+'</td><td class="r"><b>'+nf(x.c)+'</b></td><td class="r">'+dlt(x.c,x.p)+'</td></tr>'});
+ $('stores').innerHTML=st+'</table>';
+
+ // semana a semana
+ var wk='<table><tr><th>Semana</th><th class="r">Visitas</th><th class="r">Clics tienda</th><th class="r">Tasa</th><th>Producto #1</th></tr>',nw=Math.floor(all.length/7);
+ for(var w=0;w<nw;w++){var sl=all.slice(all.length-7*(w+1),all.length-7*w),wv=S(sl,'v'),wc=S(sl,'conv'),best='–',bm=0;
+  ids.forEach(function(i){var c=S(sl,'p_'+i);if(c>bm){bm=c;best=PRODUCTS[i]+' ('+c+')'}});
+  wk+='<tr><td>'+fd(sl[0].d)+' – '+fd(sl[6].d)+(w===0?' <span class="tag">Última</span>':'')+'</td><td class="r">'+nf(wv)+'</td><td class="r">'+nf(wc)+'</td><td class="r"><b>'+p1(pc(wc,wv))+'</b></td><td>'+esc(best)+'</td></tr>'}
+ $('weeks').innerHTML=wk+'</table>';
+
+ // mayoristas
+ var mv=S(cur,'m_visita'),mp=S(cur,'m_producto'),md=S(cur,'m_datos'),mo=S(cur,'m_pedido'),mu=S(cur,'m_unidades');
+ var MS=[['Entraron a Mayoristas',mv],['Agregaron productos',mp],['Completaron sus datos',md],['Enviaron el pedido',mo]],mh='';
+ MS.forEach(function(s,i){mh+='<div class="step'+(i===3?' fin':'')+'"><div>'+s[0]+'</div><div class="bar"><i style="width:'+Math.min(100,pc(s[1],mv))+'%"></i></div><div class="v">'+nf(s[1])+'<small>'+(i?p1(pc(s[1],MS[i-1][1]))+' del paso anterior':'')+'</small></div></div>'});
+ mh+='<p class="sub" style="margin-top:14px">Unidades por pedido: <b>'+(mo?(Math.round(mu/mo*10)/10).toLocaleString('es-AR'):'–')+'</b> · Total de unidades pedidas: <b>'+nf(mu)+'</b></p>';
+ $('may').innerHTML=mv?mh:'<div class="empty">Todavía no hay visitas a Mayoristas en este período.</div>';
+
+ // sugerencias
+ var T=[],add=function(p,t,d){T.push({p:p,t:t,d:d})};
+ if(V<30){add('info','Todavía hay pocos datos','Con menos de 30 visitas en el período, los porcentajes saltan mucho de un día a otro. Mirá las tendencias recién cuando haya más tráfico (probá con 30 o 90 días).')}
+ else{
+  if(R<5)add('alta','La tasa de clic es baja ('+p1(R)+')','De cada 100 visitas, solo '+Math.round(R)+' tocan un link hacia Mercado Libre. Probá: un botón de compra bien visible al principio, precio o “desde $” en las tarjetas, reputación o reseñas de la tienda y un video corto del producto.');
+  else if(R<12)add('media','Tasa de clic aceptable ('+p1(R)+'), con margen para mejorar','Hay una base de interés. Probá agregar precios o etiquetas como “Más vendido” en las tarjetas y reforzar el botón Comprar.');
+  else add('info','Muy buena tasa de clic ('+p1(R)+')','La página está llevando bien a la gente hacia la tienda. Concentrate en traer más visitas de los canales que mejor convierten.');
+  if(Vp>=30&&V<Vp*0.8)add('media','Bajaron las visitas','Hubo '+Math.round((Vp-V)/Vp*100)+'% menos visitas que en los '+N+' días anteriores. Fijate si cambió la frecuencia de publicaciones en Instagram/YouTube o si dejaste de compartir el link.');
+  if(Vp>=30&&R<Rp-2)add('media','Bajó la tasa de clic','Pasó de '+p1(Rp)+' a '+p1(R)+'. Si hiciste cambios en la página en este tiempo, revisá cuál pudo afectar.');
+  var fk=Object.keys(fx).sort(function(a,b){return fx[b]-fx[a]}).slice(0,2);
+  fk.forEach(function(k){var lbl=FUN.filter(function(f){return f[0]===k})[0][1];add('alta','Caída grande antes de “'+lbl.replace('Llegaron a ','')+'” (−'+Math.round(fx[k])+' pp)',FIX[k])});
+  var rl=pc(S(cur,'sec_linea'),V);
+  if(rl<35)add('alta','Poca gente llega a los productos','Solo '+p1(rl)+' de las visitas llega al carrusel de haraganes. Subilo más arriba en la página o hacé más visible el botón “Ver productos”.');
+  else if(rl>=40&&R<8)add('alta','Ven los productos, pero no hacen clic','Un '+p1(rl)+' llega a los productos pero solo '+p1(R)+' hace clic. Probá: precio en cada tarjeta, etiquetas de “Más vendido”, mejores fotos y un texto de 1 línea con el beneficio principal.');
+  var mS=S(cur,'dev_mobile'),dS=S(cur,'dev_desktop'),mR=pc(S(cur,'conv_d_mobile'),mS),dR=pc(S(cur,'conv_d_desktop'),dS);
+  if(mS>=20&&dS>=20&&mR<dR*0.7)add('alta','En celular se convierte menos que en compu','Celular: '+p1(mR)+' vs compu: '+p1(dR)+'. Revisá la página en un celular: botones grandes, tarjetas fáciles de tocar y que las imágenes carguen rápido.');
+  else if(mS>0&&pc(mS,mS+dS)>=70)add('info','La mayoría entra desde el celular ('+p1(pc(mS,mS+dS))+')','Pensá cada cambio primero para celular: es donde está tu público.');
+  var bestC=null;Object.keys(SRC).forEach(function(k){var v=S(cur,'src_'+k),c=S(cur,'conv_s_'+k);if(v>=10){var r=pc(c,v);if(r<R*0.5&&pc(v,V)>=15)add('media',SRC[k]+' trae visitas que no hacen clic',p1(pc(v,V))+' de las visitas vienen de ahí pero la tasa de clic es '+p1(r)+' (el promedio es '+p1(R)+'). Revisá qué link o mensaje estás usando en ese canal.');
+   if(!bestC||r>bestC.r)bestC={k:k,r:r,v:v}}});
+  if(bestC&&bestC.r>R)add('info',SRC[bestC.k]+' es tu canal que mejor convierte ('+p1(bestC.r)+')','Si querés más resultados, reforzá las publicaciones y los links que llevan desde ahí.');
+  if(PK>=20){var topr=rows[0];if(pc(topr.c,PK)>=40)add('info','Un producto concentra la mayoría de los clics','“'+PRODUCTS[topr.id]+'” se lleva el '+p1(pc(topr.c,PK))+' de los clics. Aprovechalo como producto estrella y armá combos con los otros.');
+   var zero=rows.filter(function(r){return r.c===0});if(zero.length)add('media',zero.length+' producto'+(zero.length>1?'s':'')+' sin ningún clic','Revisá foto, título o posición en el carrusel de: '+zero.slice(0,4).map(function(r){return PRODUCTS[r.id]}).join(', ')+(zero.length>4?' y otros':'')+'.')}
+  var wa=S(cur,'click_whatsapp');if(pc(wa,V)>=5)add('media','Mucha gente toca WhatsApp','Un '+p1(pc(wa,V))+' de las visitas abre WhatsApp. Puede haber dudas sin resolver: revisá si las preguntas frecuentes cubren lo que te consultan.');
+  if(mv>=10){if(pc(mp,mv)<40)add('alta','Entran a Mayoristas pero no agregan productos','Solo '+p1(pc(mp,mv))+' suma algo al pedido. Revisá que se entienda rápido qué hacer (títulos, botones + y −) y probá poner un mensaje de condiciones arriba.');
+   else if(mp>0&&pc(mo,mp)<40)add('alta','Arman el pedido pero no lo envían','Solo '+p1(pc(mo,mp))+' de quienes agregan productos termina enviando. Probá pedir menos datos o aclarar mejor qué pasa al tocar “Enviar pedido por WhatsApp”.')}
+ }
+ var ord={alta:0,media:1,info:2};T.sort(function(a,b){return ord[a.p]-ord[b.p]});
+ $('tips').innerHTML=T.map(function(t){return '<div class="tip '+t.p+'"><b><span class="tag">'+({alta:'Alta',media:'Media',info:'Info'}[t.p])+'</span>'+esc(t.t)+'</b><span>'+esc(t.d)+'</span></div>'}).join('')||'<div class="empty">Sin sugerencias por ahora.</div>';
+}
+
+$('go').addEventListener('click',login);
+$('key').addEventListener('keydown',function(e){if(e.key==='Enter')login()});
+$('out').addEventListener('click',function(){try{sessionStorage.removeItem('iw_pk')}catch(e){}location.reload()});
+[].forEach.call(document.querySelectorAll('.tab'),function(b){b.addEventListener('click',function(){state.days=parseInt(b.getAttribute('data-d'),10);[].forEach.call(document.querySelectorAll('.tab'),function(x){x.classList.toggle('on',x===b)});load()})});
+try{var k=sessionStorage.getItem('iw_pk');if(k){state.key=k;load()}}catch(e){}
+})();
+</script>
+</body></html>
