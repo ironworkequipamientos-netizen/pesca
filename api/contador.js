@@ -1,7 +1,9 @@
-/* Contador real de visitas, clics por producto y pedidos mayoristas.
-   Guarda los números en Upstash Redis (se conecta desde Vercel > Storage). */
+/* Registro de visitas, clics y pedidos de la página (todo se guarda por día en Upstash Redis).
+   - POST: la página manda los eventos que van pasando.
+   - GET: devuelve los números chicos que se muestran en la página (visitas, clics por producto, pedidos). */
 const URL_ = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL;
 const TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN;
+const KEEP_SECONDS = 400 * 86400; // se guardan ~13 meses
 
 const IDS = [
   'haragan-pesca-aluminio-1-20-mts',
@@ -21,6 +23,20 @@ const IDS = [
   'soporte-con-linterna-posacana-25-mm',
   'asistente-pesca-con-bandeja'
 ];
+const STORES = ['corsario', 'shark', 'pesca-ian', 'pae-pesca', 'la-triestina', 'punto-pesca', 'alma-mia', 'surucho', 'carlitos'];
+const SOURCES = ['instagram', 'youtube', 'google', 'facebook', 'whatsapp', 'qr', 'directo', 'otros'];
+
+// Lista de eventos permitidos (cualquier otro se ignora)
+const ALLOWED = new Set([
+  'v', 'conv',
+  'click_producto', 'click_tienda', 'click_ver_productos', 'click_whatsapp', 'click_mayorista', 'click_carrusel',
+  'sec_promesa', 'sec_dolores', 'sec_deseos', 'sec_linea', 'sec_accesorios', 'sec_pasos', 'sec_faq', 'sec_puntos', 'sec_final',
+  'm_visita', 'm_producto', 'm_datos', 'm_pedido', 'm_unidades'
+]);
+IDS.forEach(id => ALLOWED.add('p_' + id));
+STORES.forEach(s => ALLOWED.add('ll_' + s));
+SOURCES.forEach(s => { ALLOWED.add('src_' + s); ALLOWED.add('conv_s_' + s); });
+['mobile', 'desktop'].forEach(d => { ALLOWED.add('dev_' + d); ALLOWED.add('conv_d_' + d); });
 
 async function redis(cmds) {
   const r = await fetch(URL_ + '/pipeline', {
@@ -43,7 +59,6 @@ function json(body, status, cache) {
   });
 }
 
-// Suma 1 a la visita, al clic de un producto o al pedido
 export async function POST(request) {
   if (!URL_ || !TOKEN) return json({ ok: false });
   try {
@@ -52,43 +67,47 @@ export async function POST(request) {
       return json({ ok: true, skip: true });
     }
     let b = {};
-    try { b = await request.json(); } catch (e) {}
-    let key = null;
-    if (b.t === 'visita') key = 'v';
-    else if (b.t === 'pedido') key = 'o';
-    else if (b.t === 'producto' && IDS.includes(b.id)) key = 'p:' + b.id;
-    if (!key) return json({ ok: false }, 400);
-    const k = key + ':' + day(0);
-    await redis([['INCR', k], ['EXPIRE', k, 3456000]]);
+    try { b = JSON.parse(await request.text()); } catch (e) {}
+    const list = Array.isArray(b.e) ? b.e.slice(0, 30) : [];
+    const key = 'd:' + day(0);
+    const cmds = [];
+    list.forEach(x => {
+      if (!x || !ALLOWED.has(x.n)) return;
+      let amount = 1;
+      if (x.n === 'm_unidades') amount = Math.max(1, Math.min(5000, parseInt(x.v, 10) || 1));
+      cmds.push(['HINCRBY', key, x.n, amount]);
+    });
+    if (!cmds.length) return json({ ok: false }, 400);
+    cmds.push(['EXPIRE', key, KEEP_SECONDS]);
+    await redis(cmds);
     return json({ ok: true });
   } catch (e) {
     return json({ ok: false });
   }
 }
 
-// Devuelve los números para mostrar en la página
+// Números que se muestran en la página (se cachean 15 minutos)
 export async function GET() {
   if (!URL_ || !TOKEN) return json({ ok: false });
   try {
+    const fields = ['v'].concat(IDS.map(id => 'p_' + id));
     const d7 = [0, 1, 2, 3, 4, 5, 6].map(day);
     const d30 = Array.from({ length: 30 }, (_, i) => day(i));
-    const keys = []
-      .concat(d7.map(d => 'v:' + d))
-      .concat(d30.map(d => 'o:' + d));
-    IDS.forEach(id => d7.forEach(d => keys.push('p:' + id + ':' + d)));
-
-    const out = await redis([['MGET', ...keys]]);
-    const vals = (out[0].result || []).map(x => parseInt(x, 10) || 0);
-    const sum = (a, from, n) => a.slice(from, from + n).reduce((s, x) => s + x, 0);
-
+    const cmds = d7.map(d => ['HMGET', 'd:' + d, ...fields])
+      .concat(d30.map(d => ['HGET', 'd:' + d, 'm_pedido']));
+    const out = await redis(cmds);
+    const n = x => parseInt(x, 10) || 0;
+    let visitas = 0;
     const productos = {};
-    IDS.forEach((id, i) => { productos[id] = sum(vals, 37 + i * 7, 7); });
-
-    return json(
-      { ok: true, visitas: sum(vals, 0, 7), pedidos: sum(vals, 7, 30), productos },
-      200,
-      's-maxage=60, stale-while-revalidate=300'
-    );
+    IDS.forEach(id => { productos[id] = 0; });
+    for (let i = 0; i < 7; i++) {
+      const row = out[i].result || [];
+      visitas += n(row[0]);
+      IDS.forEach((id, j) => { productos[id] += n(row[j + 1]); });
+    }
+    let pedidos = 0;
+    for (let i = 7; i < 37; i++) pedidos += n(out[i].result);
+    return json({ ok: true, visitas, pedidos, productos }, 200, 's-maxage=900, stale-while-revalidate=1800');
   } catch (e) {
     return json({ ok: false });
   }
