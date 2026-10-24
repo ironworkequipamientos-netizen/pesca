@@ -23,7 +23,7 @@ const IDS = [
   'soporte-con-linterna-posacana-25-mm',
   'asistente-pesca-con-bandeja'
 ];
-const STORES = ['corsario', 'shark', 'pesca-ian', 'pae-pesca', 'la-triestina', 'punto-pesca', 'alma-mia', 'surucho', 'carlitos'];
+const STORES = ['corsario', 'shark', 'pesca-ian', 'pae-pesca', 'la-triestina', 'punto-pesca', 'alma-mia', 'surucho', 'carlitos', 'fly-shop'];
 const SOURCES = ['instagram', 'youtube', 'google', 'facebook', 'whatsapp', 'qr', 'directo', 'otros'];
 
 // Lista de eventos permitidos (cualquier otro se ignora)
