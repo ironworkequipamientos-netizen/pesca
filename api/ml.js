@@ -117,7 +117,20 @@ async function build(t, n) {
     const r = await api('/items?ids=' + chunk.join(','), t);
     (Array.isArray(r) ? r : []).forEach(x => {
       const b = x && x.body;
-      if (b && b.id) items[b.id] = { id: b.id, t: b.title, p: b.price, s: b.status, l: b.permalink, stock: b.available_quantity, visits: 0, units: 0, rev: 0, orders: 0, up: 0, rp: 0 };
+      if (b && b.id) {
+        const st = b.start_time ? Math.floor((Date.now() - new Date(b.start_time).getTime()) / 864e5) : null;
+        items[b.id] = {
+          id: b.id, t: b.title, p: b.price, s: b.status, l: b.permalink, stock: b.available_quantity,
+          img: String(b.secure_thumbnail || b.thumbnail || '').replace(/^http:/, 'https:'),
+          pc: Array.isArray(b.pictures) ? b.pictures.length : null,
+          fs: !!(b.shipping && b.shipping.free_shipping),
+          lt: (b.shipping && b.shipping.logistic_type) || '',
+          ty: b.listing_type_id || '',
+          hl: typeof b.health === 'number' ? b.health : null,
+          age: st, sold: Number(b.sold_quantity) || 0,
+          visits: 0, units: 0, rev: 0, orders: 0, up: 0, rp: 0, ls: ''
+        };
+      }
     });
   }
   // 3) visitas por día de cada publicación
@@ -152,37 +165,48 @@ async function build(t, n) {
     res.forEach(ord => {
       if (ord.status === 'cancelled' || ord.status === 'invalid') return;
       const d = new Date(new Date(ord.date_created).getTime() - 3 * 3600e3).toISOString().slice(0, 10);
-      ords.push({ id: String(ord.id), d, ship: ord.shipping && ord.shipping.id ? String(ord.shipping.id) : '', items: ord.order_items || [] });
+      ords.push({ id: String(ord.id), d, buyer: ord.buyer && ord.buyer.id ? String(ord.buyer.id) : '', ship: ord.shipping && ord.shipping.id ? String(ord.shipping.id) : '', items: ord.order_items || [] });
     });
     if (res.length < 50) break;
   }
-  // 5) ubicación (provincia y ciudad) de cada venta. Se guarda solo "provincia|ciudad", sin datos personales
+  // 5) ubicación (provincia y ciudad) de cada venta. Se guarda solo "provincia|ciudad", sin datos personales.
+  //    Clave nueva (ml:geo2): la anterior podía tener "Sin dato" guardado por error. Los errores NO se guardan.
   const known = {};
   for (let i = 0; i < ords.length; i += 100) {
     const chunk = ords.slice(i, i + 100);
-    const r = await redis([['HMGET', 'ml:geo', ...chunk.map(x => x.id)]]);
+    const r = await redis([['HMGET', 'ml:geo2', ...chunk.map(x => x.id)]]);
     (r[0].result || []).forEach((v, j) => { if (v != null) known[chunk[j].id] = v; });
   }
+  const geoDiag = { orders: ords.length, noShip: 0, fromCache: Object.keys(known).length, resolved: 0, errors: {}, sample: '' };
   const todo = [];
-  ords.forEach(x => { if (known[x.id] == null) { if (!x.ship) known[x.id] = 'Sin dato|'; else todo.push(x); } });
-  const batch = todo.slice(0, PENDING_LIMIT);
   const writes = [];
+  ords.forEach(x => {
+    if (known[x.id] != null) return;
+    if (!x.ship) { geoDiag.noShip++; known[x.id] = 'Sin envío|'; writes.push(['HSET', 'ml:geo2', x.id, 'Sin envío|']); }
+    else todo.push(x);
+  });
+  const batch = todo.slice(0, PENDING_LIMIT);
   await pool(batch, 6, async x => {
     try {
       const r = await fetch(API + '/shipments/' + x.ship, { headers: { Authorization: 'Bearer ' + t.access_token, accept: 'application/json', 'x-format-new': 'true' } });
-      if (r.status === 401 || r.status === 403) { known[x.id] = 'Sin dato|'; writes.push(['HSET', 'ml:geo', x.id, 'Sin dato|']); return; }
-      if (!r.ok) return;
+      if (!r.ok) { geoDiag.errors[r.status] = (geoDiag.errors[r.status] || 0) + 1; return; }
       const s = await r.json().catch(() => ({}));
-      const ad = s.shipping_address || s.receiver_address || {};
-      const val = ((ad.state && ad.state.name) || 'Sin dato') + '|' + ((ad.city && ad.city.name) || '');
-      known[x.id] = val;
-      writes.push(['HSET', 'ml:geo', x.id, val]);
-    } catch (e) {}
+      const dest = s.destination || {};
+      const ad = dest.shipping_address || dest.receiver_address || s.shipping_address || s.receiver_address || {};
+      const stName = ad.state && (ad.state.name || ad.state);
+      const ctName = ad.city && (ad.city.name || ad.city);
+      if (!stName) { geoDiag.errors.sin_direccion = (geoDiag.errors.sin_direccion || 0) + 1; if (!geoDiag.sample) geoDiag.sample = Object.keys(s).slice(0, 12).join(','); return; }
+      const val = String(stName) + '|' + String(ctName || '');
+      known[x.id] = val; geoDiag.resolved++;
+      writes.push(['HSET', 'ml:geo2', x.id, val]);
+    } catch (e) { geoDiag.errors.red = (geoDiag.errors.red || 0) + 1; }
   });
   if (writes.length) await redis(writes);
   const pending = ords.filter(x => known[x.id] == null).length;
+  const stuck = pending > 0 && geoDiag.resolved === 0 && Object.keys(geoDiag.errors).length > 0;
   // 6) sumas por publicación, provincia y ciudad (período actual y anterior)
-  const dailyO = {};
+  const dailyO = {}, dailyU = {};
+  const bc = {}, bp = {};
   const tot = { orders: 0, units: 0, rev: 0, ordersP: 0, unitsP: 0, revP: 0 };
   const prov = {}, city = {};
   const bump = (map, key, cur, u, r) => {
@@ -200,10 +224,12 @@ async function build(t, n) {
       if (cur) { items[id].units += q; items[id].rev += amount; items[id].orders += 1; } else { items[id].up += q; items[id].rp += amount; }
       ou += q; orv += amount;
     });
-    if (cur) { tot.orders++; tot.units += ou; tot.rev += orv; dailyO[x.d] = (dailyO[x.d] || 0) + 1; }
+    if (cur) { tot.orders++; tot.units += ou; tot.rev += orv; dailyO[x.d] = (dailyO[x.d] || 0) + 1; dailyU[x.d] = (dailyU[x.d] || 0) + ou; }
     else { tot.ordersP++; tot.unitsP += ou; tot.revP += orv; }
+    if (x.buyer) { const m = cur ? bc : bp; m[x.buyer] = (m[x.buyer] || 0) + 1; }
+    x.items.forEach(oi => { const id = oi.item && oi.item.id; if (id && items[id] && x.d > (items[id].ls || '')) items[id].ls = x.d; });
     const loc = known[x.id];
-    if (loc != null) {
+    if (loc != null && loc !== 'Sin envío|') {
       const parts = loc.split('|');
       const pv = canon(parts[0]);
       bump(prov, pv, cur, ou, orv);
@@ -213,10 +239,12 @@ async function build(t, n) {
   const sortGeo = map => Object.keys(map).map(k => map[k]).sort((a, b) => (b.o - a.o) || (b.op - a.op));
   const geo = { prov: sortGeo(prov), city: sortGeo(city).slice(0, 25) };
   const daily = [];
-  for (let i = n - 1; i >= 0; i--) { const d = day(i); daily.push({ d, v: dailyV[d] || 0, o: dailyO[d] || 0 }); }
+  for (let i = n - 1; i >= 0; i--) { const d = day(i); daily.push({ d, v: dailyV[d] || 0, o: dailyO[d] || 0, u: dailyU[d] || 0 }); }
+  const bk = Object.keys(bc);
+  const buyers = { unique: bk.length, repeat: bk.filter(k => bc[k] > 1).length, returning: bk.filter(k => bp[k]).length, uniqueP: Object.keys(bp).length };
   const list = Object.keys(items).map(k => items[k]).sort((a, b) => (b.units - a.units) || (b.visits - a.visits));
   const visits = list.reduce((s, x) => s + x.visits, 0);
-  return { ok: true, n, generated: Date.now(), totals: { visits, orders: tot.orders, units: tot.units, rev: tot.rev, ordersP: tot.ordersP, unitsP: tot.unitsP, revP: tot.revP, visitErrors }, daily, items: list, geo, pending };
+  return { ok: true, n, generated: Date.now(), totals: { visits, orders: tot.orders, units: tot.units, rev: tot.rev, ordersP: tot.ordersP, unitsP: tot.unitsP, revP: tot.revP, visitErrors }, daily, items: list, geo, pending, geoDiag, stuck, buyers };
 }
 
 export async function POST(request) {
@@ -231,6 +259,14 @@ export async function POST(request) {
   }
   const n = Math.max(7, Math.min(90, parseInt(b.days, 10) || 30));
   try {
+    // Importar ubicaciones desde el reporte de ventas de Mercado Libre: [[nºventa, provincia, ciudad], ...]
+    if (Array.isArray(b.import)) {
+      const rows = b.import.slice(0, 6000).filter(r => Array.isArray(r) && /^\d{6,20}$/.test(String(r[0])) && r[1]);
+      const cmds = rows.map(r => ['HSET', 'ml:geo2', String(r[0]), String(r[1]).slice(0, 60) + '|' + String(r[2] || '').slice(0, 60)]);
+      for (let i = 0; i < cmds.length; i += 500) await redis(cmds.slice(i, i + 500));
+      await redis([['DEL', 'ml:cache:7', 'ml:cache:30', 'ml:cache:90']]);
+      return json({ ok: true, imported: rows.length });
+    }
     if (!b.refresh) {
       const c = await redis([['GET', 'ml:cache:' + n]]);
       if (c[0].result) return json(Object.assign(JSON.parse(c[0].result), { cached: true }));
@@ -238,7 +274,7 @@ export async function POST(request) {
     const tk = await getToken();
     if (tk.error) return json({ ok: false, error: tk.error });
     const data = await build(tk.t, n);
-    if (!data.pending) await redis([['SET', 'ml:cache:' + n, JSON.stringify(data), 'EX', CACHE_SECONDS]]);
+    if (!data.pending && !data.stuck) await redis([['SET', 'ml:cache:' + n, JSON.stringify(data), 'EX', CACHE_SECONDS]]);
     return json(data);
   } catch (e) {
     if (e && e.code === 'auth') return json({ ok: false, error: 'permisos', status: e.status });
