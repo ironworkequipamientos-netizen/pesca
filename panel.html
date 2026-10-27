@@ -72,8 +72,34 @@ footer{padding:40px 0 60px;color:#666;font-size:.72rem;letter-spacing:.2em;text-
 .st.off{background:rgba(255,106,0,.18);color:var(--o)}
 td a{color:#fff;text-decoration:none;border-bottom:1px dotted #666}
 td a:hover{color:var(--o)}
+
+.mts{display:flex;gap:8px;margin-top:22px;border-bottom:1px solid var(--line)}
+.mt{background:none;border:0;border-bottom:3px solid transparent;color:var(--mu);padding:10px 18px;font:700 .9rem Poppins,sans-serif;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;margin-bottom:-1px}
+.mt.on{color:#fff;border-bottom-color:var(--o)}
+.mb{margin-bottom:16px}
+.mh{margin:0 0 6px;font-size:1rem}.mh2{margin:0 0 8px;font-size:.9rem}
+.ph{width:44px;height:44px;border-radius:10px;object-fit:cover;background:#222;flex:none;display:inline-block}
+.pn{display:flex;align-items:center;gap:10px;min-width:170px}
+.gh{background:#101010;color:var(--mu);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;padding:10px 8px}
+.goal{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.goal div{background:#101010;border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.goal b{display:block;font-size:1.4rem;color:var(--ok);line-height:1.2}.goal span{color:var(--mu);font-size:.75rem}
+.quad{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
+.q{background:#101010;border:1px solid var(--line);border-radius:14px;padding:10px 12px;font-size:.8rem;font-weight:600}
+.q b{font-size:1.4rem;margin-right:6px}.q span{display:block;color:var(--mu);font-weight:400;font-size:.72rem}
+.q.r b{color:var(--bad)}.q.g b{color:var(--ok)}.q.o b{color:var(--o)}
+.cvr .cr{display:grid;grid-template-columns:minmax(180px,1.2fr) 2fr 90px;gap:12px;align-items:center;padding:6px 0;border-bottom:1px solid #1d1d1d}
+.cb{position:relative;height:12px;background:#222;border-radius:99px}.cb i{display:block;height:100%;border-radius:99px}
+.cb u{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--o);text-decoration:none}
+.cn{text-align:right;font-size:.85rem}.cn small{display:block;color:var(--mu);font-size:.68rem}
+.rec{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.rec div{background:#101010;border:1px solid var(--line);border-radius:14px;padding:12px}
+.rec b{display:block;font-size:1.3rem}.rec span{color:var(--mu);font-size:.72rem}
+.mix{display:flex;height:22px;border-radius:99px;overflow:hidden;background:#222}.mix i{display:block;height:100%}
+.imp{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}.imp summary{cursor:pointer;color:var(--o);font-weight:600;font-size:.85rem}
+.imp input{color:var(--mu);margin-top:6px}
 [hidden]{display:none!important}
-@media(max-width:860px){.kpis{grid-template-columns:repeat(2,1fr)}.g2{grid-template-columns:1fr}.step{grid-template-columns:1fr 90px}.step .bar{grid-column:1/-1;order:3}}
+@media(max-width:860px){.goal,.rec{grid-template-columns:1fr}.quad{grid-template-columns:1fr 1fr}.cvr .cr{grid-template-columns:1fr 70px}.cvr .cb{grid-column:1/-1;order:3}.kpis{grid-template-columns:repeat(2,1fr)}.g2{grid-template-columns:1fr}.step{grid-template-columns:1fr 90px}.step .bar{grid-column:1/-1;order:3}}
 </style></head>
 <body>
 <header><div class="w top">
@@ -93,6 +119,7 @@ td a:hover{color:var(--o)}
   <div class="err" id="err"></div>
  </div>
 
+ <div class="mts" id="mts" hidden><button class="mt on" data-t="web">Sitio web</button><button class="mt" data-t="ml">Mercado Libre</button></div>
  <main id="main" hidden>
   <div class="kpis" id="kpis"></div>
 
@@ -118,7 +145,6 @@ td a:hover{color:var(--o)}
 
   <section><h2>Venta <b>mayorista</b></h2><p class="sub">Recorrido de quienes entran a la página de mayoristas.</p><div class="card" id="may"></div></section>
 
-  <section id="mlsec"><h2>Mercado <b>Libre</b></h2><p class="sub">Visitas y ventas reales de tus publicaciones, leídas directo de tu cuenta (solo lectura).</p><div class="card scroll" id="ml"><div class="empty">Cargando…</div></div></section>
 
   <section><h2>Cómo leer <b>los datos</b></h2><div class="card"><ul class="how">
    <li><b>Visita:</b> un navegador que entra a la página, contado una vez por día.</li>
@@ -128,6 +154,10 @@ td a:hover{color:var(--o)}
    <li><b>Mercado Libre:</b> los datos se actualizan cada 30 minutos y pueden diferir levemente de tu panel de vendedor (por cómo se cuentan fechas y órdenes canceladas). La conversión es unidades vendidas sobre visitas.</li>
    <li>Las visitas que hacés vos con <code>?noconteo=1</code> y los bots conocidos no se cuentan. Los números son aproximados: una persona con dos dispositivos cuenta dos veces.</li>
   </ul></div></section>
+ </main>
+
+ <main id="mlmain" hidden>
+  <section style="padding-top:22px"><h2>Mercado <b>Libre</b></h2><p class="sub">Visitas y ventas reales de tus publicaciones, leídas directo de tu cuenta (solo lectura). Los períodos 7/30/90 días de arriba también aplican acá.</p><div id="ml"><div class="empty">Cargando…</div></div></section>
  </main>
 </div>
 <footer>Ironwork Equipamientos · Panel privado</footer>
@@ -139,7 +169,7 @@ var STORES={'corsario':'Corsario Pesca','shark':'Shark Pesca','pesca-ian':'Pesca
 var SRC={instagram:'Instagram',youtube:'YouTube',google:'Google',facebook:'Facebook',whatsapp:'WhatsApp',qr:'QR de puntos de venta',directo:'Directo / sin dato',otros:'Otros sitios'};
 var FUN=[['v','Entraron a la página'],['sec_promesa','Llegaron a la promesa'],['sec_dolores','Llegaron a los dolores'],['sec_deseos','Llegaron a los deseos'],['sec_linea','Llegaron a los haraganes'],['sec_accesorios','Llegaron a los accesorios'],['sec_pasos','Llegaron a “Así de simple”'],['sec_faq','Llegaron a las preguntas'],['sec_puntos','Llegaron a puntos de venta'],['sec_final','Llegaron al cierre']];
 var FIX={sec_promesa:'Se van antes de la promesa: mejorá el primer pantallazo (titular claro, imagen del producto y un botón principal bien visible) y revisá que cargue rápido en celular.',sec_dolores:'Pocos pasan de la promesa a los dolores: acortá la promesa o sumá una imagen o video corto del producto.',sec_deseos:'Se pierden en la sección de dolores: probá hacerla más corta o más visual.',sec_linea:'Se pierden antes de ver los productos: subí el carrusel más arriba o hacé más visible el botón “Ver productos”.',sec_accesorios:'Pocos bajan hasta los accesorios: sumá un botón o mención a “Accesorios” dentro de la sección de haraganes.',sec_pasos:'Se pierden después de los productos: está bien si ya hicieron clic; si no, reforzá el botón de compra en esa zona.',sec_faq:'Pocos llegan a las preguntas: es normal que no todos bajen; si es una caída grande, acortá lo anterior.',sec_puntos:'Pocos llegan a los puntos de venta: si querés más tráfico a locales, subí esa sección o sumá un botón en el menú.',sec_final:'Pocos llegan al cierre: está bien si ya hicieron clic antes; revisá que haya un botón de compra visible durante toda la página.'};
-var state={days:30,key:''};
+var state={days:30,key:'',tab:/[?&]ml=ok/.test(location.search)?'ml':'web'};
 var $=function(i){return document.getElementById(i)};
 var nf=function(n){return Math.round(n).toLocaleString('es-AR')};
 var pc=function(a,b){return b>0?a/b*100:0};
@@ -156,9 +186,9 @@ function load(){$('err').textContent='';
  fetch('/api/panel',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({k:state.key,days:state.days})})
  .then(function(r){return r.json()}).then(function(d){
   if(!d.ok){var m={clave:'Clave incorrecta.',sin_clave:'Falta crear la variable PANEL_KEY en Vercel (ver instrucciones).',sin_base:'La base de datos no está conectada.',datos:'No se pudieron leer los datos. Probá de nuevo.'};
-   $('err').textContent=m[d.error]||'No se pudo entrar.';$('login').hidden=false;$('main').hidden=true;$('tools').hidden=true;try{sessionStorage.removeItem('iw_pk')}catch(e){}return}
+   $('err').textContent=m[d.error]||'No se pudo entrar.';$('login').hidden=false;$('main').hidden=true;$('mlmain').hidden=true;$('mts').hidden=true;$('tools').hidden=true;try{sessionStorage.removeItem('iw_pk')}catch(e){}return}
   try{sessionStorage.setItem('iw_pk',state.key)}catch(e){}
-  $('login').hidden=true;$('main').hidden=false;$('tools').hidden=false;render(d)})
+  $('login').hidden=true;$('tools').hidden=false;$('mts').hidden=false;showTab(state.tab);render(d)})
  .catch(function(){$('err').textContent='No se pudo conectar. Probá de nuevo.'})}
 
 function render(data){
@@ -256,19 +286,37 @@ function render(data){
  }
  var ord={alta:0,media:1,info:2};T.sort(function(a,b){return ord[a.p]-ord[b.p]});
  $('tips').innerHTML=T.map(function(t){return '<div class="tip '+t.p+'"><b><span class="tag">'+({alta:'Alta',media:'Media',info:'Info'}[t.p])+'</span>'+esc(t.t)+'</b><span>'+esc(t.d)+'</span></div>'}).join('')||'<div class="empty">Sin sugerencias por ahora.</div>';
- mlTry=0;loadML(false);
+ mlLast=null;if(state.tab==='ml'){mlTry=0;loadML(false)}
 }
 
 
 /* ---------- Mercado Libre ---------- */
 var mlTry=0;
 var justConnected=/[?&]ml=ok/.test(location.search);
+var mlLast=null;
 function money(n){return '$ '+Math.round(n).toLocaleString('es-AR')}
 function safeUrl(u){return /^https:\/\/[a-z0-9.\-]*mercadolibre\.com/i.test(u||'')?u:''}
+function thumb(x){var u=/^https:\/\//.test(x.img||'')?x.img:'';return u?'<img class="ph" src="'+esc(u)+'" alt="" loading="lazy" referrerpolicy="no-referrer">':'<span class="ph"></span>'}
+function nm(x,n){return esc((x.t||x.id).slice(0,n||60))}
+function pcell(x,n){var u=safeUrl(x.l),t=nm(x,n);return '<div class="pn">'+thumb(x)+'<span>'+(u?'<a href="'+u+'" target="_blank" rel="noopener">'+t+'</a>':t)+'</span></div>'}
+function mh(t,s){return '<h3 class="mh">'+t+'</h3>'+(s?'<p class="sub" style="margin-bottom:12px">'+s+'</p>':'')}
+function blk(inner){return '<div class="card mb">'+inner+'</div>'}
+function med(a){a=a.slice().sort(function(x,y){return x-y});return a.length?a[Math.floor(a.length/2)]:0}
+function vs(h){return h+' <span class="eq">vs antes</span>'}
+function tipHtml(t){return '<div class="tip '+t.p+'"><b><span class="tag">'+({alta:'Alta',media:'Media',info:'Info'}[t.p])+'</span>'+t.t+'</b><span>'+t.d+'</span></div>'}
+function issues(x){var r=[];
+ if(x.pc!=null&&x.pc<6)r.push('Solo '+x.pc+' foto'+(x.pc===1?'':'s')+': sumá más (detalle, uso, medidas)');
+ if(x.hl!=null&&x.hl<0.7)r.push('Calidad de la publicación baja ('+Math.round(x.hl*100)+'%): completá la ficha técnica');
+ if(x.fs===false)r.push('Sin envío gratis');
+ if(x.ty==='free'||x.ty==='bronze')r.push('Publicación gratuita: poca exposición');
+ else if(x.ty==='gold_special'||x.ty==='silver')r.push('Clásica: evaluá Premium para ofrecer cuotas');
+ if(x.t&&x.t.length<45)r.push('Título corto ('+x.t.length+'/60): sumá medida, material y uso');
+ if(x.stock!=null&&x.stock<=3&&x.units>0)r.push('Stock bajo ('+x.stock+')');
+ return r}
 function loadML(refresh){
  $('ml').innerHTML='<div class="empty">Cargando datos de Mercado Libre…</div>';
  fetch('/api/ml',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({k:state.key,days:state.days,refresh:!!refresh})})
- .then(function(r){return r.json()}).then(function(d){if(!d.ok)mlError(d);else renderML(d)})
+ .then(function(r){return r.json()}).then(function(d){if(!d.ok)mlError(d);else{mlLast=d;renderML(d)}})
  .catch(function(){$('ml').innerHTML='<div class="empty">No se pudo conectar con Mercado Libre. Probá de nuevo.</div>'})}
 function connectML(){
  $('ml').insertAdjacentHTML('beforeend','<div class="empty">Abriendo Mercado Libre…</div>');
@@ -278,35 +326,172 @@ function connectML(){
 function mlError(d){
  var e=d.error,box=$('ml');
  if(e==='no_conectado'||e==='reconectar'){
-  box.innerHTML='<div class="empty" style="padding-top:0">'+(e==='reconectar'?'La conexión con Mercado Libre venció o se revocó. ':'Todavía no conectaste tu cuenta de Mercado Libre. ')+'Conectala una sola vez para ver las visitas y ventas de tus publicaciones.</div><button class="btn" id="mlc" style="max-width:320px">Conectar Mercado Libre</button>';
+  box.innerHTML='<div class="card"><div class="empty" style="padding-top:0">'+(e==='reconectar'?'La conexión con Mercado Libre venció o se revocó. ':'Todavía no conectaste tu cuenta de Mercado Libre. ')+'Conectala una sola vez para ver las visitas y ventas de tus publicaciones.</div><button class="btn" id="mlc" style="max-width:320px">Conectar Mercado Libre</button></div>';
   $('mlc').onclick=connectML;return}
  var m={sin_ml:'Faltan las variables ML_CLIENT_ID y ML_CLIENT_SECRET en Vercel (y hacer Redeploy).',sin_base:'La base de datos no está conectada.',sin_clave:'Falta la variable PANEL_KEY.',
   permisos:'Mercado Libre rechazó el permiso'+(d.status?' ('+d.status+')':'')+'. Revisá que la aplicación tenga lectura de publicaciones, ventas y métricas, y volvé a conectar.',
   ml:'Mercado Libre devolvió un error'+(d.status?' ('+d.status+')':'')+(d.detail?': '+esc(d.detail):'')+'. Probá de nuevo en unos minutos.'};
- box.innerHTML='<div class="empty">'+(m[e]||'No se pudo leer Mercado Libre.')+'</div>'+(e==='permisos'?'<button class="btn" id="mlc" style="max-width:320px">Volver a conectar</button>':'');
+ box.innerHTML='<div class="card"><div class="empty">'+(m[e]||'No se pudo leer Mercado Libre.')+'</div>'+(e==='permisos'?'<button class="btn" id="mlc" style="max-width:320px">Volver a conectar</button>':'')+'</div>';
  if(e==='permisos')$('mlc').onclick=connectML}
+
+/* gráficos */
+function chartGrid(W,H,L,Tt,Rr,ph,mx,fmt){var s='';for(var g=0;g<=4;g++){var y=Tt+ph-ph*g/4;s+='<line x1="'+L+'" x2="'+(W-Rr)+'" y1="'+y+'" y2="'+y+'" stroke="#222"/><text x="'+(L-6)+'" y="'+(y+4)+'" text-anchor="end">'+fmt(mx*g/4)+'</text>'}return s}
+function comboChart(daily){
+ var W=900,H=230,L=42,B=28,Tt=10,Rr=10,pw=W-L-Rr,ph=H-Tt-B,mxv=Math.max(1,Math.max.apply(null,daily.map(function(x){return x.v}))),mxu=Math.max(1,Math.max.apply(null,daily.map(function(x){return x.u||0}))),bw=pw/daily.length;
+ var s='<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Visitas y unidades vendidas por día">'+chartGrid(W,H,L,Tt,Rr,ph,mxv,nf),stp=Math.ceil(daily.length/10),pts=[];
+ daily.forEach(function(x,i){var bh=ph*x.v/mxv,bx=L+i*bw,cx=bx+bw/2,cy=Tt+ph-ph*(x.u||0)/mxu;
+  s+='<rect x="'+(bx+bw*0.15)+'" y="'+(Tt+ph-bh)+'" width="'+(bw*0.7)+'" height="'+bh+'" rx="2" fill="#3a3a3a"><title>'+fd(x.d)+': '+x.v+' visitas, '+(x.u||0)+' unidades</title></rect>';
+  pts.push(cx+','+cy);if(i%stp===0)s+='<text x="'+cx+'" y="'+(H-8)+'" text-anchor="middle">'+fd(x.d)+'</text>'});
+ return s+'<polyline fill="none" stroke="#2fd27a" stroke-width="2.5" stroke-linejoin="round" points="'+pts.join(' ')+'"/></svg>'}
+function lineChart(vals,labels,fmt,color,ref){
+ var W=900,H=190,L=46,B=26,Tt=10,Rr=10,pw=W-L-Rr,ph=H-Tt-B,mx=Math.max.apply(null,vals.concat([ref||0,0.01]))*1.1,n=vals.length,stp=Math.ceil(n/10),pts=[];
+ var s='<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Tendencia">'+chartGrid(W,H,L,Tt,Rr,ph,mx,fmt);
+ vals.forEach(function(v,i){var x=L+pw*(n>1?i/(n-1):0.5),y=Tt+ph-ph*v/mx;pts.push(x+','+y);if(i%stp===0)s+='<text x="'+x+'" y="'+(H-8)+'" text-anchor="middle">'+labels[i]+'</text>'});
+ if(ref){var yr=Tt+ph-ph*ref/mx;s+='<line x1="'+L+'" x2="'+(W-Rr)+'" y1="'+yr+'" y2="'+yr+'" stroke="#ff6a00" stroke-dasharray="5 4"/><text x="'+(W-Rr)+'" y="'+(yr-5)+'" text-anchor="end" style="fill:#ff6a00">referencia '+fmt(ref)+'</text>'}
+ vals.forEach(function(v,i){var x=L+pw*(n>1?i/(n-1):0.5),y=Tt+ph-ph*v/mx;s+='<circle cx="'+x+'" cy="'+y+'" r="2.5" fill="'+color+'"><title>'+labels[i]+': '+fmt(v)+'</title></circle>'});
+ return s+'<polyline fill="none" stroke="'+color+'" stroke-width="2.5" stroke-linejoin="round" points="'+pts.join(' ')+'"/></svg>'}
+function scatter(list,medV,bench){
+ var W=900,H=360,L=48,B=40,Tt=14,Rr=14,pw=W-L-Rr,ph=H-Tt-B;
+ var vs=list.map(function(x){return x.visits}),vmin=Math.min.apply(null,vs),vmax=Math.max.apply(null,vs);if(vmax<=vmin)vmax=vmin*2+1;
+ var lx=function(v){return L+pw*(Math.log(v)-Math.log(vmin))/(Math.log(vmax)-Math.log(vmin))};
+ var mc=Math.max(bench*1.6,Math.max.apply(null,list.map(function(x){return x.cv})),1)*1.1,ly=function(c){return Tt+ph-ph*c/mc};
+ var mr=Math.max(1,Math.max.apply(null,list.map(function(x){return x.rev})));
+ var s='<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Visitas contra conversión por publicación">';
+ for(var g=0;g<=4;g++){var y=Tt+ph-ph*g/4;s+='<line x1="'+L+'" x2="'+(W-Rr)+'" y1="'+y+'" y2="'+y+'" stroke="#222"/><text x="'+(L-6)+'" y="'+(y+4)+'" text-anchor="end">'+p1(mc*g/4)+'</text>'}
+ var xm=lx(Math.max(vmin,Math.min(vmax,medV))),yb=ly(bench);
+ s+='<line x1="'+xm+'" x2="'+xm+'" y1="'+Tt+'" y2="'+(Tt+ph)+'" stroke="#666" stroke-dasharray="5 4"/><line x1="'+L+'" x2="'+(W-Rr)+'" y1="'+yb+'" y2="'+yb+'" stroke="#ff6a00" stroke-dasharray="5 4"/>';
+ s+='<text x="'+(L+6)+'" y="'+(Tt+14)+'" style="fill:#2fd27a">Pocas visitas, convierte bien: promocionar</text><text x="'+(W-Rr-6)+'" y="'+(Tt+14)+'" text-anchor="end" style="fill:#2fd27a">Estrellas: cuidar stock</text><text x="'+(L+6)+'" y="'+(Tt+ph-8)+'" style="fill:#888">Revisar o pausar</text><text x="'+(W-Rr-6)+'" y="'+(Tt+ph-8)+'" text-anchor="end" style="fill:#ff5a5a">Muchas visitas, convierte poco: arreglar ya</text>';
+ s+='<text x="'+(L+pw/2)+'" y="'+(H-6)+'" text-anchor="middle">Visitas (escala logarítmica) →</text>';
+ list.forEach(function(x){var hv=x.visits>=medV,hc=x.cv>=bench&&x.units>0,col=hv?(hc?'#2fd27a':'#ff5a5a'):(hc?'#ff6a00':'#777'),r=5+Math.sqrt(x.rev/mr)*11;
+  s+='<circle cx="'+lx(x.visits)+'" cy="'+ly(x.cv)+'" r="'+r.toFixed(1)+'" fill="'+col+'" fill-opacity=".55" stroke="'+col+'"><title>'+esc((x.t||x.id).slice(0,60))+': '+x.visits+' visitas, '+x.units+' vendidas, conversión '+p1(x.cv)+'</title></circle>'});
+ return s+'</svg>'}
+
+/* ubicaciones: importar reporte de ventas */
+function normH(s){return String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim()}
+function loadXlsx(cb){if(window.XLSX)return cb();var sc=document.createElement('script');sc.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';sc.onload=cb;sc.onerror=function(){$('impmsg').textContent='No se pudo cargar el lector de Excel. Probá de nuevo o subí el reporte en formato CSV.'};document.head.appendChild(sc)}
+function parseReport(file,done){
+ var fr=new FileReader();
+ fr.onload=function(){loadXlsx(function(){
+  try{
+   var wb=XLSX.read(fr.result,{type:'array',raw:true,cellDates:false}),best=null;
+   wb.SheetNames.forEach(function(sn){var rows=XLSX.utils.sheet_to_json(wb.Sheets[sn],{header:1,raw:false,defval:''});
+    for(var i=0;i<Math.min(rows.length,15);i++){var hs=rows[i].map(normH);
+     var ci=-1,cp=-1,cc=-1;
+     hs.forEach(function(h,j){
+      if(ci<0&&(/^(n |nro |numero )?(de )?(la )?venta( id)?$/.test(h)||/^n de venta|^numero de venta|^id de (la )?venta|^nro de venta|^n venta/.test(h)))ci=j;
+      if(cp<0&&(/provincia/.test(h)||(/^estado$/.test(h)&&false)||(/estado/.test(h)&&/(domicilio|direccion|destino|comprador|entrega)/.test(h))))cp=j;
+      if(cc<0&&/(ciudad|municipio|localidad|partido)/.test(h))cc=j});
+     if(ci>=0&&cp>=0){if(!best||rows.length>best.rows.length)best={rows:rows,hi:i,ci:ci,cp:cp,cc:cc,hs:hs};break}}});
+   if(!best){var any=[];wb.SheetNames.forEach(function(sn){var r=XLSX.utils.sheet_to_json(wb.Sheets[sn],{header:1,raw:false,defval:''});for(var i=0;i<Math.min(r.length,15);i++){if(r[i].filter(String).length>4){any=r[i].filter(String).slice(0,40);break}}});
+    return done({err:'No encontré las columnas de número de venta y provincia. Columnas que veo: '+any.join(' · ')})}
+   var out=[];
+   for(var k=best.hi+1;k<best.rows.length;k++){var r=best.rows[k],id=String(r[best.ci]||'').replace(/\D/g,''),pv=String(r[best.cp]||'').trim();if(id&&pv)out.push([id,pv,best.cc>=0?String(r[best.cc]||'').trim():''])}
+   done({rows:out,cols:[best.rows[best.hi][best.ci],best.rows[best.hi][best.cp],best.cc>=0?best.rows[best.hi][best.cc]:'(sin ciudad)']})
+  }catch(e){done({err:'No pude leer ese archivo. Subí el Excel (.xlsx) o CSV tal como lo descargaste de Mercado Libre.'})}})};
+ fr.readAsArrayBuffer(file)}
+function importFile(file){
+ var m=$('impmsg');m.textContent='Leyendo el archivo…';
+ parseReport(file,function(r){
+  if(r.err){m.textContent=r.err;return}
+  if(!r.rows.length){m.textContent='El archivo no tiene ventas con provincia.';return}
+  m.textContent='Detecté '+r.rows.length+' ventas (columnas: '+r.cols.join(' / ')+'). Guardando…';
+  var i=0;(function next(){
+   if(i>=r.rows.length){m.textContent='Listo: se guardó la ubicación de '+r.rows.length+' ventas. Actualizando…';mlTry=0;loadML(true);return}
+   fetch('/api/ml',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({k:state.key,days:state.days,import:r.rows.slice(i,i+2000)})})
+   .then(function(x){return x.json()}).then(function(x){if(!x.ok){m.textContent='No se pudo guardar ('+(x.error||'error')+').';return}i+=2000;next()})
+   .catch(function(){m.textContent='Se cortó la conexión. Probá de nuevo.'})})()})}
+function geoHelp(d){
+ var g=d.geoDiag||{},er=g.errors||{},ks=Object.keys(er),t='';
+ var why={401:'Mercado Libre no deja leer los envíos con este permiso. En tu aplicación de Mercado Libre Developers activá la lectura de “Envíos” y volvé a conectar.',403:'Mercado Libre no deja leer los envíos con este permiso. En tu aplicación de Mercado Libre Developers activá la lectura de “Envíos” y volvé a conectar.',404:'Algunos envíos ya no están disponibles en Mercado Libre.',sin_direccion:'El envío no trae provincia ni ciudad (suele pasar con retiros, ventas coordinadas o Mercado Envíos Flex en algunos casos).',red:'Hubo cortes de conexión. Probá actualizar.'};
+ if(g.orders!=null)t+='<p class="how" style="margin:0 0 8px">Ventas del período: <b>'+g.orders+'</b> · sin envío: <b>'+(g.noShip||0)+'</b> · ubicadas ahora: <b>'+(g.resolved||0)+'</b> · ya guardadas: <b>'+(g.fromCache||0)+'</b>'+(ks.length?' · errores: '+ks.map(function(k){return esc(k)+' ×'+er[k]}).join(', '):'')+'</p>';
+ ks.forEach(function(k){if(why[k])t+='<p class="how" style="margin:0 0 6px">• '+why[k]+'</p>'});
+ if(g.sample)t+='<p class="how" style="margin:0 0 6px">Campos que devuelve el envío: '+esc(g.sample)+'</p>';
+ return t}
+
 function renderML(d){
- var T=d.totals,items=d.items,V=T.visits,cv=pc(T.units,V),daily=d.daily,box=$('ml'),h='';
+ var T=d.totals,items=d.items,n=d.n,daily=d.daily,box=$('ml'),h='';
+ var V=T.visits,cv=pc(T.units,V),tk=T.orders?T.rev/T.orders:0,tkP=T.ordersP?T.revP/T.ordersP:0;
+ var B=d.buyers||{unique:0,repeat:0,returning:0,uniqueP:0};
+ var minV=Math.max(20,Math.round(n*0.7));
+ items.forEach(function(x){x.cv=x.visits?pc(x.units,x.visits):0});
+ var act=items.filter(function(x){return x.s==='active'});
+ var elig=act.filter(function(x){return x.visits>=minV});
+ var wsales=elig.filter(function(x){return x.units>0});
+ var bench=wsales.length>=3?med(wsales.map(function(x){return x.cv})):cv;
+ var medV=med(elig.map(function(x){return x.visits}));
+ var Q={fix:[],star:[],promo:[],weak:[]};
+ elig.forEach(function(x){var hv=x.visits>=medV,hc=x.cv>=bench&&x.units>0;(hv?(hc?Q.star:Q.fix):(hc?Q.promo:Q.weak)).push(x)});
+ var below=elig.filter(function(x){return x.cv<bench}).map(function(x){x.gain=x.visits*(bench-x.cv)/100;return x}).sort(function(a,b){return b.gain-a.gain});
+ var goalN=Math.max(1,Math.ceil(elig.length*0.2)),goalMin=Math.max(1,Math.ceil(elig.length*0.15));
+ var focus=below.slice(0,goalN),gainU=focus.reduce(function(s,x){return s+x.gain},0),gainR=focus.reduce(function(s,x){return s+x.gain*(x.p||0)},0);
+ var tp=[],add=function(p,t,dd){tp.push({p:p,t:t,d:dd})};
+
  if(justConnected){h+='<div class="tip info"><b><span class="tag">Info</span>Mercado Libre conectado</b><span>La conexión quedó guardada. No hace falta volver a hacerla.</span></div>';try{history.replaceState(null,'',location.pathname)}catch(e){}justConnected=false}
- if(d.pending>0)h+='<div class="tip info"><b><span class="tag">Info</span>Completando ubicaciones de las ventas…</b><span>Faltan '+d.pending+' ventas por ubicar. Se completa solo en unos segundos.</span></div>';
- var K=[['Visitas a publicaciones',nf(V)],['Ventas (órdenes)',nf(T.orders),dlt(T.orders,T.ordersP)],['Unidades vendidas',nf(T.units),dlt(T.units,T.unitsP)],['Facturación',money(T.rev),dlt(T.rev,T.revP)],['Conversión',p1(cv)]];
- h+='<div class="kpis" style="margin:0 0 18px">'+K.map(function(k){return '<div class="kpi"><div class="l">'+k[0]+'</div><div class="n" style="font-size:1.5rem">'+k[1]+'</div>'+(k[2]?'<div class="d">'+k[2]+' <span class="eq">vs antes</span></div>':'')+'</div>'}).join('')+'</div>';
- // gráfico
- var W=900,H=240,L=42,B=28,Tt=10,Rr=10,pw=W-L-Rr,ph=H-Tt-B,mxv=Math.max(1,Math.max.apply(null,daily.map(function(x){return x.v}))),mxo=Math.max(1,Math.max.apply(null,daily.map(function(x){return x.o}))),bw=pw/daily.length,svg='<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Visitas y ventas por día en Mercado Libre">';
- for(var g=0;g<=4;g++){var y=Tt+ph-ph*g/4;svg+='<line x1="'+L+'" x2="'+(W-Rr)+'" y1="'+y+'" y2="'+y+'" stroke="#222"/><text x="'+(L-6)+'" y="'+(y+4)+'" text-anchor="end">'+nf(mxv*g/4)+'</text>'}
- var stp=Math.ceil(daily.length/10),pts=[];
- daily.forEach(function(x,i){var bh=ph*x.v/mxv,bx=L+i*bw,cx=bx+bw/2,cy=Tt+ph-ph*x.o/mxo;
-  svg+='<rect x="'+(bx+bw*0.15)+'" y="'+(Tt+ph-bh)+'" width="'+(bw*0.7)+'" height="'+bh+'" rx="2" fill="#3a3a3a"><title>'+fd(x.d)+': '+x.v+' visitas, '+x.o+' ventas</title></rect>';
-  pts.push(cx+','+cy);if(i%stp===0)svg+='<text x="'+cx+'" y="'+(H-8)+'" text-anchor="middle">'+fd(x.d)+'</text>'});
- svg+='<polyline fill="none" stroke="#2fd27a" stroke-width="2.5" stroke-linejoin="round" points="'+pts.join(' ')+'"/></svg>';
- h+='<p class="sub" style="margin-bottom:6px">Barras: visitas por día. Línea verde: ventas (órdenes) por día, con su propia escala.</p>'+svg;
- // ranking de productos
+ if(d.pending>0&&!d.stuck)h+='<div class="tip info"><b><span class="tag">Info</span>Completando ubicaciones de las ventas…</b><span>Faltan '+d.pending+' ventas por ubicar. Se completa solo en unos segundos.</span></div>';
+
+ /* 1. KPIs */
+ var K=[['Visitas',nf(V)],['Unidades vendidas',nf(T.units),vs(dlt(T.units,T.unitsP))],['Órdenes',nf(T.orders),vs(dlt(T.orders,T.ordersP))],['Facturación',money(T.rev),vs(dlt(T.rev,T.revP))],['Conversión',p1(cv),'<span class="eq">unidades ÷ visitas</span>'],
+  ['Ticket promedio',money(tk),vs(dlt(tk,tkP))],['Compradores distintos',nf(B.unique),vs(dlt(B.unique,B.uniqueP))],['Compraron 2+ veces',nf(B.repeat),'<span class="eq">'+p1(pc(B.repeat,B.unique))+' de compradores</span>'],['Ya eran clientes',nf(B.returning),'<span class="eq">'+p1(pc(B.returning,B.unique))+' volvió a comprar</span>'],['Publicaciones activas',nf(act.length),'<span class="eq">'+elig.length+' con tráfico para medir</span>']];
+ h+='<div class="kpis" style="margin:0 0 16px">'+K.map(function(k){return '<div class="kpi"><div class="l">'+k[0]+'</div><div class="n" style="font-size:1.45rem">'+k[1]+'</div>'+(k[2]?'<div class="d">'+k[2]+'</div>':'')+'</div>'}).join('')+'</div>';
+
+ /* 2. Plan 15-20% */
+ var p2='';
+ if(!elig.length){p2=mh('Plan para mejorar tu conversión','Todavía no hay publicaciones activas con al menos '+minV+' visitas en el período para medir con certeza. Probá con 30 o 90 días.')}
+ else{
+  p2=mh('Plan para mejorar la conversión','Tu referencia es la <b>conversión mediana de las publicaciones que venden</b> ('+p1(bench)+'). Mejorar entre el 15% y el 20% de tus publicaciones con tráfico (<b>'+goalMin+' a '+goalN+' de '+elig.length+'</b>) hasta esa referencia es la meta. Se ordenan por cuántas ventas extra podrías conseguir con las mismas visitas.');
+  if(focus.length){
+   p2+='<div class="goal"><div><b>+'+nf(Math.max(1,Math.round(gainU)))+'</b><span>ventas extra por período</span></div><div><b>'+money(gainR)+'</b><span>facturación extra estimada</span></div><div><b>'+focus.length+'</b><span>publicaciones a trabajar primero</span></div></div>';
+   p2+='<div class="scroll"><table><tr><th>#</th><th>Publicación</th><th class="r">Visitas</th><th class="r">Conversión</th><th class="r">Ventas extra</th><th>Qué revisar</th></tr>';
+   focus.forEach(function(x,i){var is=issues(x);p2+='<tr><td><span class="rank">'+(i+1)+'</span></td><td>'+pcell(x,48)+'</td><td class="r">'+nf(x.visits)+'</td><td class="r"><b>'+p1(x.cv)+'</b><br><span class="eq" style="font-size:.7rem">meta '+p1(bench)+'</span></td><td class="r up"><b>+'+(Math.round(x.gain*10)/10).toLocaleString('es-AR')+'</b></td><td class="how">'+(is.length?is.slice(0,3).map(function(t){return '• '+esc(t)}).join('<br>'):'• Precio frente a la competencia<br>• Primera foto y título')+'</td></tr>'});
+   p2+='</table></div><p class="sub" style="margin:10px 0 0">Orden de trabajo sugerido: 1) primera foto y título, 2) precio y cuotas/envío, 3) descripción y ficha técnica. Cambiá de a una publicación por vez y esperá 2 semanas para medir el efecto.</p>';
+  }else p2+='<div class="empty">Todas tus publicaciones con tráfico están en o sobre la referencia. Ahora el trabajo es subir la referencia: probá mejorar las 2 o 3 que menos convierten.</div>';
+ }
+ h+=blk(p2);
+
+ /* 3. Mapa de decisión */
+ if(elig.length>=2){
+  h+=blk(mh('Mapa de decisión: visitas contra conversión','Cada burbuja es una publicación; el tamaño es lo que facturó. Líneas punteadas: visitas medianas (gris) y conversión de referencia (naranja).')+'<div class="scroll">'+scatter(elig,medV,bench)+'</div>'+
+   '<div class="quad"><div class="q r"><b>'+Q.fix.length+'</b> Arreglar ya<span>muchas visitas, convierte poco</span></div><div class="q g"><b>'+Q.star.length+'</b> Estrellas<span>proteger stock y precio</span></div><div class="q o"><b>'+Q.promo.length+'</b> Promocionar<span>convierte bien, pocos la ven</span></div><div class="q"><b>'+Q.weak.length+'</b> Revisar o pausar<span>poco tráfico y poca venta</span></div></div>');
+  /* 4. Ranking de conversión */
+  var byC=elig.slice().sort(function(a,b){return b.cv-a.cv}),mxc=Math.max(bench*1.2,byC[0].cv,0.01);
+  var rows='<div class="cvr">';byC.forEach(function(x){var w=Math.max(1,x.cv/mxc*100),col=x.cv>=bench&&x.units>0?'var(--ok)':(x.visits>=medV?'var(--bad)':'#777');
+   rows+='<div class="cr">'+pcell(x,38)+'<div class="cb"><i style="width:'+w+'%;background:'+col+'"></i><u style="left:'+(bench/mxc*100)+'%"></u></div><div class="cn"><b>'+p1(x.cv)+'</b><small>'+x.units+' de '+nf(x.visits)+'</small></div></div>'});rows+='</div>';
+  h+=blk(mh('Ranking por conversión','De la que mejor convierte a la que peor. La marca naranja es la referencia ('+p1(bench)+'). Solo publicaciones activas con al menos '+minV+' visitas.')+rows);
+ }
+
+ /* 5. Tendencias */
+ var cvd=[],lab=daily.map(function(x){return fd(x.d)});
+ daily.forEach(function(x,i){var su=0,sv=0;for(var j=Math.max(0,i-6);j<=i;j++){su+=daily[j].u||0;sv+=daily[j].v||0}cvd.push(sv?su/sv*100:0)});
+ var wk=[0,1,2,3,4,5,6].map(function(){return {v:0,u:0,o:0}}),wn=['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
+ daily.forEach(function(x){var i=(new Date(x.d+'T12:00:00Z').getUTCDay()+6)%7;wk[i].v+=x.v;wk[i].u+=(x.u||0);wk[i].o+=x.o});
+ var mxwu=Math.max(1,Math.max.apply(null,wk.map(function(w){return w.u})));
+ var wt='<table><tr><th>Día</th><th class="r">Visitas</th><th class="r">Unidades</th><th class="r">Conversión</th><th style="width:34%"></th></tr>';
+ wk.forEach(function(w,i){wt+='<tr><td>'+wn[i]+'</td><td class="r">'+nf(w.v)+'</td><td class="r"><b>'+nf(w.u)+'</b></td><td class="r">'+(w.v?p1(pc(w.u,w.v)):'–')+'</td><td><div class="bar"><i style="width:'+(w.u/mxwu*100)+'%"></i></div></td></tr>'});wt+='</table>';
+ h+=blk(mh('Tendencia diaria','Barras: visitas por día. Línea verde: unidades vendidas por día (otra escala).')+'<div class="scroll">'+comboChart(daily)+'</div>'+
+  '<h3 class="mh" style="margin-top:22px">Conversión diaria (promedio móvil de 7 días)</h3><p class="sub" style="margin-bottom:8px">Suaviza los picos: si la línea baja varios días seguidos, algo cambió en precio, stock, competencia o publicaciones.</p><div class="scroll">'+lineChart(cvd,lab,p1,'#ff6a00',cv)+'</div>'+
+  '<h3 class="mh" style="margin-top:22px">Qué día se vende más</h3><div class="scroll">'+wt+'</div>');
+
+ /* 6. Top vendidos y facturación con foto */
  var byU=items.filter(function(x){return x.units>0||x.up>0}).sort(function(a,b){return (b.units-a.units)||(b.rev-a.rev)}).slice(0,8),byR=items.filter(function(x){return x.rev>0||x.rp>0}).sort(function(a,b){return b.rev-a.rev}).slice(0,8);
- function rk(list,valf,prevf,fmt,lab){var s='<table><tr><th>#</th><th>Publicación</th><th class="r">'+lab+'</th><th class="r">%</th><th class="r">vs antes</th></tr>',all=lab==='Unidades'?T.units:T.rev;
-  list.forEach(function(x,i){s+='<tr class="'+(i<3&&valf(x)>0?'top3':'')+'"><td><span class="rank">'+(i+1)+'</span></td><td>'+esc((x.t||x.id).slice(0,48))+'</td><td class="r"><b>'+fmt(valf(x))+'</b></td><td class="r">'+p1(pc(valf(x),all))+'</td><td class="r">'+dlt(valf(x),prevf(x))+'</td></tr>'});return s+'</table>'}
- h+='<div class="g2" style="margin-top:22px"><div><h3 style="margin:0 0 8px;font-size:.95rem">Más vendidos (unidades)</h3>'+(byU.length?rk(byU,function(x){return x.units},function(x){return x.up},nf,'Unidades'):'<div class="empty">Sin ventas en el período.</div>')+'</div>'+
-  '<div><h3 style="margin:0 0 8px;font-size:.95rem">Los que más facturan</h3>'+(byR.length?rk(byR,function(x){return x.rev},function(x){return x.rp},money,'Facturación'):'<div class="empty">Sin ventas en el período.</div>')+'</div></div>';
- // geografía
+ function rk(list,valf,prevf,fmt,lab,all){var s='<table><tr><th>#</th><th>Publicación</th><th class="r">'+lab+'</th><th class="r">%</th><th class="r">vs antes</th></tr>';
+  list.forEach(function(x,i){s+='<tr class="'+(i<3&&valf(x)>0?'top3':'')+'"><td><span class="rank">'+(i+1)+'</span></td><td>'+pcell(x,40)+'</td><td class="r"><b>'+fmt(valf(x))+'</b></td><td class="r">'+p1(pc(valf(x),all))+'</td><td class="r">'+dlt(valf(x),prevf(x))+'</td></tr>'});return s+'</table>'}
+ h+=blk(mh('Lo que más vende y lo que más factura')+'<div class="g2"><div><h3 class="mh2">Más vendidos (unidades)</h3>'+(byU.length?'<div class="scroll">'+rk(byU,function(x){return x.units},function(x){return x.up},nf,'Unidades',T.units)+'</div>':'<div class="empty">Sin ventas en el período.</div>')+'</div><div><h3 class="mh2">Los que más facturan</h3>'+(byR.length?'<div class="scroll">'+rk(byR,function(x){return x.rev},function(x){return x.rp},money,'Facturación',T.rev)+'</div>':'<div class="empty">Sin ventas en el período.</div>')+'</div></div>');
+
+ /* 7. Ventas todo el año: recurrencia y dependencia */
+ var top3=byR.slice(0,3),sh1=byR[0]?pc(byR[0].rev,T.rev):0,sh3=pc(top3.reduce(function(s,x){return s+x.rev},0),T.rev);
+ var rec='<div class="g2"><div>'+mh('Clientes que vuelven','La venta que dura todo el año sale de clientes que recompran y de no depender de pocos productos.')+
+  '<div class="rec"><div><b>'+nf(B.unique)+'</b><span>compradores distintos</span></div><div><b>'+p1(pc(B.returning,B.unique))+'</b><span>ya habían comprado antes</span></div><div><b>'+p1(pc(B.repeat,B.unique))+'</b><span>compró 2+ veces en el período</span></div></div></div>'+
+  '<div>'+mh('Dependencia de pocos productos')+(T.rev>0?'<div class="mix">'+byR.slice(0,5).map(function(x,i){return '<i style="width:'+pc(x.rev,T.rev)+'%;background:hsl(24,'+(100-i*16)+'%,'+(52-i*5)+'%)" title="'+esc((x.t||x.id).slice(0,40))+': '+p1(pc(x.rev,T.rev))+'"></i>'}).join('')+'</div><p class="how" style="margin-top:8px">El producto #1 aporta el <b>'+p1(sh1)+'</b> de la facturación; los 3 primeros, el <b>'+p1(sh3)+'</b>.</p>':'<div class="empty">Sin ventas para medir.</div>')+'</div></div>';
+ h+=blk(rec);
+
+ /* 8. Salud del catálogo y stock */
+ var cat=[['Con 5 fotos o menos',act.filter(function(x){return x.pc!=null&&x.pc<6}).length],['Sin envío gratis',act.filter(function(x){return x.fs===false}).length],['Clásicas o gratuitas (sin Premium)',act.filter(function(x){return ['gold_special','silver','free','bronze'].indexOf(x.ty)>-1}).length],['Calidad baja (<70%)',act.filter(function(x){return x.hl!=null&&x.hl<0.7}).length],['Título corto (<45 caracteres)',act.filter(function(x){return x.t&&x.t.length<45}).length],['Activas sin ventas en el período',act.filter(function(x){return x.units===0}).length],['Pausadas que vendieron',items.filter(function(x){return x.s==='paused'&&x.units>0}).length]];
+ var cb='<table>'+cat.map(function(c){return '<tr><td>'+c[0]+'</td><td class="r"><b>'+c[1]+'</b></td><td style="width:38%"><div class="bar"><i style="width:'+(act.length?Math.min(100,c[1]/act.length*100):0)+'%;background:'+(c[1]?'var(--o)':'var(--ok)')+'"></i></div></td></tr>'}).join('')+'</table>';
+ var cover=items.filter(function(x){return x.units>0&&x.stock!=null&&x.s==='active'}).map(function(x){x.days=Math.round(x.stock/(x.units/n));return x}).sort(function(a,b){return a.days-b.days}).slice(0,8);
+ var sb=cover.length?'<table>'+cover.map(function(x){return '<tr><td>'+pcell(x,34)+'</td><td class="r">'+nf(x.stock)+' u.</td><td class="r"><b class="'+(x.days<15?'dn':x.days<30?'':'up')+'">'+(x.days>=365?'+1 año':x.days+' días')+'</b></td></tr>'}).join('')+'</table>':'<div class="empty">Sin ventas para estimar.</div>';
+ h+=blk('<div class="g2"><div>'+mh('Salud del catálogo','Cuántas de tus '+act.length+' publicaciones activas tienen cada punto a mejorar.')+cb+'</div><div>'+mh('Cuánto te dura el stock','Días que alcanza el stock al ritmo de venta del período. Menos de 15 días: reponé.')+sb+'</div></div>');
+
+ /* 9. Geografía */
  var G=d.geo||{prov:[],city:[]},GT=G.prov.reduce(function(a,p){return a+p.o},0),GP=G.prov.reduce(function(a,p){return a+p.op},0),known=G.prov.filter(function(p){return p.n!=='Sin dato'}),unk=G.prov.filter(function(p){return p.n==='Sin dato'})[0];
  var GRID={'Jujuy':[1,0,'JU'],'Salta':[2,0,'SA'],'Formosa':[4,0,'FO'],'Catamarca':[1,1,'CA'],'Tucumán':[2,1,'TU'],'Santiago del Estero':[3,1,'SE'],'Chaco':[4,1,'CH'],'Corrientes':[5,1,'CR'],'Misiones':[6,1,'MI'],'San Juan':[0,2,'SJ'],'La Rioja':[1,2,'LR'],'Córdoba':[2,2,'CB'],'Santa Fe':[3,2,'SF'],'Entre Ríos':[4,2,'ER'],'Mendoza':[0,3,'MZ'],'San Luis':[1,3,'SL'],'La Pampa':[2,3,'LP'],'Buenos Aires':[3,3,'BA'],'Capital Federal':[4,3,'CABA'],'Neuquén':[0,4,'NQ'],'Río Negro':[1,4,'RN'],'Chubut':[1,5,'CU'],'Santa Cruz':[1,6,'SC'],'Tierra del Fuego':[2,7,'TF']};
  var pm={};known.forEach(function(p){pm[p.n]=p});var mxg=Math.max(1,Math.max.apply(null,known.map(function(p){return p.o}).concat([1])));
@@ -318,58 +503,72 @@ function renderML(d){
  known.slice(0,10).forEach(function(p,i){gt+='<tr class="'+(i<3?'top3':'')+'"><td><span class="rank">'+(i+1)+'</span></td><td>'+esc(p.n)+'</td><td class="r"><b>'+nf(p.o)+'</b></td><td class="r">'+p1(pc(p.o,GT))+'</td><td class="r">'+dlt(p.o,p.op)+'</td></tr>'});gt+='</table>';
  var ct='<table><tr><th>#</th><th>Ciudad</th><th class="r">Ventas</th><th class="r">vs antes</th></tr>';
  (G.city||[]).slice(0,10).forEach(function(p,i){ct+='<tr><td><span class="rank">'+(i+1)+'</span></td><td>'+esc(p.n)+'</td><td class="r"><b>'+nf(p.o)+'</b></td><td class="r">'+dlt(p.o,p.op)+'</td></tr>'});ct+='</table>';
- h+='<h3 style="margin:26px 0 4px;font-size:.95rem">Dónde te compran</h3><p class="sub" style="margin-bottom:10px">Ventas por provincia (según la dirección de entrega). Mapa simplificado: cada cuadro es una provincia y el color marca cuántas ventas tuvo.'+(unk&&unk.o?' Sin dato de ubicación: '+unk.o+' (retiros o ventas sin envío).':'')+'</p>'+
-  (known.length?'<div class="g2"><div style="text-align:center">'+gs+'</div><div>'+gt+'<h3 style="margin:18px 0 8px;font-size:.9rem">Ciudades</h3>'+ct+'</div></div>':'<div class="empty">Todavía no hay ventas con ubicación en este período.</div>');
- // tabla
- h+='<h3 style="margin:22px 0 8px;font-size:.95rem">Por publicación</h3><table><tr><th>Publicación</th><th>Estado</th><th class="r">Precio</th><th class="r">Visitas</th><th class="r">Vendidas</th><th class="r">Conversión</th><th class="r">Stock</th><th class="r">Facturación</th></tr>';
- items.slice(0,40).forEach(function(x){var u=safeUrl(x.l),nm=esc((x.t||x.id).slice(0,70)),stt=x.s==='active'?'<span class="st on">Activa</span>':x.s==='paused'?'<span class="st off">Pausada</span>':'<span class="st">'+esc(x.s==='closed'?'Cerrada':(x.s||'–'))+'</span>';
-  h+='<tr><td>'+(u?'<a href="'+u+'" target="_blank" rel="noopener">'+nm+'</a>':nm)+'</td><td>'+stt+'</td><td class="r">'+(x.p?money(x.p):'–')+'</td><td class="r">'+nf(x.visits)+'</td><td class="r"><b>'+nf(x.units)+'</b></td><td class="r">'+(x.visits?p1(pc(x.units,x.visits)):'–')+'</td><td class="r">'+(x.stock==null?'–':nf(x.stock))+'</td><td class="r">'+money(x.rev)+'</td></tr>'});
- h+='</table>';
- // sugerencias
- var tp=[],add=function(p,t,dd){tp.push({p:p,t:t,d:dd})},nmx=function(x){return '“'+esc((x.t||x.id).slice(0,50))+'”'};
+ var gg=mh('Dónde te compran','Ventas por provincia según la dirección de entrega. Cada cuadro del mapa es una provincia; el color marca cuántas ventas tuvo.'+(unk&&unk.o?' Sin dato de ubicación: '+unk.o+'.':''));
+ if(known.length)gg+='<div class="g2"><div style="text-align:center">'+gs+'</div><div class="scroll">'+gt+'<h3 class="mh2" style="margin-top:18px">Ciudades</h3>'+ct+'</div></div>';
+ else gg+='<div class="tip alta"><b><span class="tag">Atención</span>Todavía no se pudo ubicar ninguna venta</b><span>'+geoHelp(d)+'<br>Mientras tanto podés cargar el reporte de ventas de Mercado Libre (abajo) y el mapa se completa al instante.</span></div>';
+ if(known.length&&d.geoDiag&&(d.pending>0||Object.keys(d.geoDiag.errors||{}).length))gg+='<div class="how" style="margin-top:10px">'+geoHelp(d)+'</div>';
+ gg+='<details class="imp"><summary>Cargar el reporte de ventas de Mercado Libre (alternativa para completar provincias y ciudades)</summary><p class="how">Descargá el reporte de ventas en Excel desde tu cuenta de Mercado Libre (sección Ventas → reportes/descargar) y subilo acá. El panel lee <b>solo</b> número de venta, provincia y ciudad; no guarda nombres, direcciones ni teléfonos, y no se sube nada más. La edad y el género de los compradores no vienen en ese reporte ni en la API.</p><input type="file" id="impf" accept=".xlsx,.xls,.csv"><div class="how" id="impmsg" style="margin-top:8px"></div></details>';
+ h+=blk(gg);
+
+ /* 10. Tabla completa por conversión */
+ var low=items.filter(function(x){return x.s!=='active'||x.visits<minV});
+ function rowT(x){var stt=x.s==='active'?'<span class="st on">Activa</span>':x.s==='paused'?'<span class="st off">Pausada</span>':'<span class="st">'+esc(x.s==='closed'?'Cerrada':(x.s||'–'))+'</span>';
+  return '<tr><td>'+pcell(x,46)+'</td><td>'+stt+'</td><td class="r">'+(x.p?money(x.p):'–')+'</td><td class="r">'+nf(x.visits)+'</td><td class="r"><b>'+nf(x.units)+'</b></td><td class="r"><b class="'+(x.visits&&x.cv>=bench&&x.units>0?'up':'')+'">'+(x.visits?p1(x.cv):'–')+'</b></td><td class="r">'+(x.stock==null?'–':nf(x.stock))+'</td><td class="r">'+money(x.rev)+'</td></tr>'}
+ var tb='<div class="scroll"><table><tr><th>Publicación</th><th>Estado</th><th class="r">Precio</th><th class="r">Visitas</th><th class="r">Vendidas</th><th class="r">Conversión</th><th class="r">Stock</th><th class="r">Facturación</th></tr>';
+ elig.slice().sort(function(a,b){return b.cv-a.cv||b.units-a.units}).forEach(function(x){tb+=rowT(x)});
+ if(low.length){tb+='<tr><td colspan="8" class="gh">Con pocas visitas (menos de '+minV+') o no activas: la conversión no es confiable</td></tr>';low.sort(function(a,b){return b.visits-a.visits||b.units-a.units}).slice(0,40).forEach(function(x){tb+=rowT(x)})}
+ tb+='</table></div>';
+ h+=blk(mh('Todas las publicaciones, de mejor a peor conversión','Ordenadas por conversión (unidades vendidas ÷ visitas), no por cantidad de ventas.')+tb);
+
+ /* 11. Plan de acción */
  if(V<50)add('info','Todavía hay pocas visitas en Mercado Libre','Con menos de 50 visitas en el período las conversiones saltan mucho. Mirá tendencias con 30 o 90 días.');
- else{
-  var nov=items.filter(function(x){return x.visits>=30&&x.units===0&&x.s==='active'});
-  if(nov.length)add('alta',nov.length+' publicación'+(nov.length>1?'es':'')+' con visitas pero sin ventas','Reciben visitas pero no venden: '+nov.slice(0,4).map(nmx).join(', ')+(nov.length>4?' y otras':'')+'. Probá: revisar precio frente a la competencia, fotos y título, cuotas sin interés y envío (Flex/Full).');
-  var pz=items.filter(function(x){return x.s==='paused'&&x.units>0});
-  if(pz.length)add('alta','Publicaciones pausadas que vendieron en el período','Vendieron antes de pausarse: '+pz.slice(0,4).map(nmx).join(', ')+'. Si tenés stock, reactivarlas suele ser lo más rápido para sumar ventas.');
-  var low=items.filter(function(x){return x.units>0&&x.stock!=null&&x.stock<=3&&x.s==='active'});
-  if(low.length)add('media','Poco stock en productos que venden','Quedan 3 unidades o menos de: '+low.slice(0,4).map(nmx).join(', ')+'. Reponé antes de perder la posición.');
-  var vs=items.filter(function(x){return x.visits>0}).map(function(x){return x.visits}).sort(function(a,b){return a-b}),med=vs.length?vs[Math.floor(vs.length/2)]:0;
-  var few=items.filter(function(x){return x.units>=2&&x.visits<med*0.6&&x.s==='active'});
-  if(few.length)add('info','Venden bien con pocas visitas','Convierten alto pero las ven pocos: '+few.slice(0,3).map(nmx).join(', ')+'. Son buenos candidatos para Product Ads o para destacar en la landing.');
-  var best=items.filter(function(x){return x.visits>=30}).sort(function(a,b){return pc(b.units,b.visits)-pc(a.units,a.visits)})[0];
-  if(best&&best.units>0)add('info','La publicación que mejor convierte',''+nmx(best)+' vende '+p1(pc(best.units,best.visits))+' de sus visitas. Mirá qué la hace distinta (precio, fotos, título) y repetilo en las demás.');
-  if(cv<1)add('media','La conversión general es baja ('+p1(cv)+')','Menos de 1 venta cada 100 visitas. Es una referencia orientativa: revisá precio, fotos, descripción y condiciones de envío de las publicaciones con más visitas.');
- }
+ if(focus.length)add('alta','Empezá por '+focus.length+' publicaciones ('+goalMin+'–'+goalN+' es tu meta del 15–20%)',focus.slice(0,4).map(function(x){return '“'+nm(x,40)+'”'}).join(', ')+(focus.length>4?' y otras':'')+'. Llevarlas a '+p1(bench)+' de conversión sumaría unas '+nf(Math.max(1,Math.round(gainU)))+' ventas por período con las mismas visitas.');
+ var pz=items.filter(function(x){return x.s==='paused'&&x.units>0});
+ if(pz.length)add('alta','Publicaciones pausadas que vendieron','Vendieron antes de pausarse: '+pz.slice(0,4).map(function(x){return '“'+nm(x,40)+'”'}).join(', ')+'. Si tenés stock, reactivarlas es lo más rápido para sumar ventas.');
+ var lowst=cover.filter(function(x){return x.days<15});
+ if(lowst.length)add('alta','Stock para menos de 15 días','Reponé: '+lowst.slice(0,4).map(function(x){return '“'+nm(x,40)+'” ('+x.days+' días)'}).join(', ')+'. Quedarte sin stock en lo que más vende hace perder posición.');
+ var nov=elig.filter(function(x){return x.units===0});
+ if(nov.length)add('alta',nov.length+' publicación'+(nov.length>1?'es':'')+' con visitas y cero ventas',nov.slice(0,4).map(function(x){return '“'+nm(x,40)+'”'}).join(', ')+'. Probá: precio frente a competencia, cuotas sin interés, envío gratis, primera foto y título.');
+ if(Q.promo.length)add('media','Venden bien pero las ven pocos',Q.promo.slice(0,3).map(function(x){return '“'+nm(x,40)+'”'}).join(', ')+'. Son las mejores candidatas para Product Ads, promociones y para destacar en la landing y en tus redes.');
+ var photo=act.filter(function(x){return x.pc!=null&&x.pc<6&&x.visits>=minV});
+ if(photo.length)add('media',photo.length+' publicaciones con tráfico y pocas fotos','Sumar fotos (uso real, medidas, packaging, comparación de tamaños) es de lo más barato para subir conversión: '+photo.slice(0,3).map(function(x){return '“'+nm(x,40)+'”'}).join(', ')+'.');
+ if(T.rev>0&&sh1>=50)add('media','Dependés de un solo producto ('+p1(sh1)+' de la facturación)','Para vender parejo todo el año, impulsá los otros: armá kits (haragán + posacaña), cross-sell en la descripción y una publicación “combo” con mejor ticket.');
+ if(B.unique>=10&&pc(B.returning,B.unique)<10)add('media','Pocos clientes vuelven a comprar ('+p1(pc(B.returning,B.unique))+')','Incluí en cada paquete una tarjeta con QR a la landing o a tu tienda y una razón para volver (accesorios compatibles, descuento por recompra). Respondé rápido las preguntas y pedí reseñas: arman la base de ventas recurrentes.');
+ else if(B.unique>=10)add('info','Recompra: '+p1(pc(B.returning,B.unique))+' de tus compradores ya había comprado','Mantenelo: ofrecé accesorios compatibles en cada venta y seguí el mismo indicador cada mes.');
+ var bw=wk.map(function(w,i){return {i:i,u:w.u,v:w.v}}).filter(function(w){return w.v>=10}).sort(function(a,b){return pc(b.u,b.v)-pc(a.u,a.v)})[0];
+ if(bw&&bw.u>0)add('info',wn[bw.i]+' es el día que mejor convierte ('+p1(pc(bw.u,bw.v))+')','Concentrá ahí promociones y novedades; revisá también qué día tiene mucho tráfico y poca venta.');
+ add('info','Mirá el año completo','Con 90 días no se ve la temporada. Comparás cada mes con el mismo mes del año anterior en tu panel de Mercado Libre y anotá los meses fuertes para preparar stock y promociones antes.');
  if(known.length&&GT>=10){
   var top=known[0],tsh=pc(top.o,GT);
   if(tsh>=50)add('info',esc(top.n)+' concentra el '+p1(tsh)+' de tus ventas','Hay mucha dependencia de una sola zona. Si querés crecer en otras, probá publicaciones o envíos pensados para esas provincias (por ejemplo Patagonia).');
   if(GP>=10){
-   known.forEach(function(p){var sh=pc(p.o,GT),sp=pc(p.op,GP);
-    if(p.o>=3&&sh-sp>=8)add('media',esc(p.n)+' está creciendo','Pasó de '+p1(sp)+' a '+p1(sh)+' de tus ventas respecto del período anterior. Puede valer la pena reforzar la comunicación y el envío hacia ahí.');
-    else if(p.op>=3&&sp-sh>=8)add('media',esc(p.n)+' bajó su participación','Pasó de '+p1(sp)+' a '+p1(sh)+' de tus ventas. Revisá si cambió algo (envíos, precio, competencia) o si es estacional.')});
+   known.forEach(function(p){var s1=pc(p.o,GT),s0=pc(p.op,GP);
+    if(p.o>=3&&s1-s0>=8)add('media',esc(p.n)+' está creciendo','Pasó de '+p1(s0)+' a '+p1(s1)+' de tus ventas respecto del período anterior. Puede valer la pena reforzar la comunicación y el envío hacia ahí.');
+    else if(p.op>=3&&s0-s1>=8)add('media',esc(p.n)+' bajó su participación','Pasó de '+p1(s0)+' a '+p1(s1)+' de tus ventas. Revisá si cambió algo (envíos, precio, competencia) o si es estacional.')});
    var fresh=known.filter(function(p){return p.o>=2&&p.op===0});
    if(fresh.length)add('info','Provincias nuevas en tus ventas','Aparecieron compras en: '+fresh.slice(0,5).map(function(p){return esc(p.n)}).join(', ')+'. Antes no habían comprado.');
-   var PAT=['Neuquén','Río Negro','Chubut','Santa Cruz','Tierra del Fuego'],pn=0,pp=0;known.forEach(function(p){if(PAT.indexOf(p.n)>-1){pn+=p.o;pp+=p.op}});
-   var ps=pc(pn,GT),pps=pc(pp,GP);
-   if(Math.abs(ps-pps)>=5)add('info','Patagonia '+(ps>pps?'crece':'baja')+': '+p1(ps)+' de las ventas','Antes era '+p1(pps)+'. Es una de tus zonas objetivo para crecer, así que conviene seguirla de cerca.');
   }
   var ba=pc(((pm['Buenos Aires']||{}).o||0)+((pm['Capital Federal']||{}).o||0),GT);
   if(ba>=70)add('info','Buenos Aires y CABA suman el '+p1(ba)+' de las ventas','El interior del país es una oportunidad: probá promociones de envío o contenido dirigido a otras provincias.');
  }
- if(unk&&GT>0&&pc(unk.o,GT)>=30)add('info','Muchas ventas sin ubicación ('+p1(pc(unk.o,GT))+')','Suelen ser retiros en persona o ventas sin envío, y no entran en el análisis por provincia.');
- if(T.visitErrors)add('info','No se pudieron leer las visitas de '+T.visitErrors+' publicación'+(T.visitErrors>1?'es':''),'Aparecen con 0 visitas en la tabla. Probá actualizar en unos minutos.');
+ if(T.visitErrors)add('info','No se pudieron leer las visitas de '+T.visitErrors+' publicación'+(T.visitErrors>1?'es':''),'Aparecen con 0 visitas. Probá actualizar en unos minutos.');
  var ord={alta:0,media:1,info:2};tp.sort(function(a,b){return ord[a.p]-ord[b.p]});
- h+='<h3 style="margin:22px 0 10px;font-size:.95rem">Qué mirar en Mercado Libre</h3>'+(tp.map(function(t){return '<div class="tip '+t.p+'"><b><span class="tag">'+({alta:'Alta',media:'Media',info:'Info'}[t.p])+'</span>'+esc(t.t)+'</b><span>'+t.d+'</span></div>'}).join('')||'<div class="empty">Sin sugerencias por ahora.</div>');
+ h+=blk(mh('Plan de acción')+tp.map(tipHtml).join(''));
  var mins=Math.max(0,Math.round((Date.now()-d.generated)/60000));
  h+='<p class="sub" style="margin:14px 0 0">Actualizado hace '+mins+' min. <button class="btn sm" id="mlr" type="button">Actualizar ahora</button></p>';
- box.innerHTML=h;$('mlr').onclick=function(){mlTry=0;loadML(true)};
- if(d.pending>0&&mlTry<15){mlTry++;setTimeout(function(){loadML(false)},1500)}}
+ box.innerHTML=h;
+ $('mlr').onclick=function(){mlTry=0;loadML(true)};
+ var f=$('impf');if(f)f.onchange=function(){if(f.files&&f.files[0])importFile(f.files[0])};
+ if(d.pending>0&&!d.stuck&&mlTry<15){mlTry++;setTimeout(function(){if(state.tab==='ml')loadML(false)},1500)}}
+
+function showTab(t){state.tab=t;$('main').hidden=t!=='web';$('mlmain').hidden=t!=='ml';
+ [].forEach.call(document.querySelectorAll('.mt'),function(b){b.classList.toggle('on',b.getAttribute('data-t')===t)});
+ if(t==='ml'){mlTry=0;if(mlLast&&mlLast.n===state.days)renderML(mlLast);else loadML(false)}}
 
 $('go').addEventListener('click',login);
 $('key').addEventListener('keydown',function(e){if(e.key==='Enter')login()});
 $('out').addEventListener('click',function(){try{sessionStorage.removeItem('iw_pk')}catch(e){}location.reload()});
+[].forEach.call(document.querySelectorAll('.mt'),function(b){b.addEventListener('click',function(){showTab(b.getAttribute('data-t'))})});
 [].forEach.call(document.querySelectorAll('.tab'),function(b){b.addEventListener('click',function(){state.days=parseInt(b.getAttribute('data-d'),10);[].forEach.call(document.querySelectorAll('.tab'),function(x){x.classList.toggle('on',x===b)});load()})});
 try{var k=sessionStorage.getItem('iw_pk');if(k){state.key=k;load()}}catch(e){}
 })();
